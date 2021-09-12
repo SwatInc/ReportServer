@@ -1,6 +1,8 @@
 # ReportServer
 This project implements plugin architecture for report generation where each report template is a plugin (dll). This gives the flexibility to add, edit, remove report templates without touching the application code.
 
+The application is designed to run in windows application tray and poll for incoming report request json files. The polling frequency is configurable. This application can easily be modified as a windows service, worker service etc...
+
 #Architecture
 The application loads libraries dynamically from a predefined plugin location (configurable via settings). Monitors a predefined location for incoming request json files with a predefined schema. 
 ### Basic Json Schema Expected
