@@ -2,9 +2,6 @@
 using ReportServer.Extensibility.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReportA
 {
@@ -23,10 +20,10 @@ namespace ReportA
 
         public void Print(string jsonData, string printerName)
         {
-            var report = new CrystalReport1();
+            //var report = new CrystalReport1();
             var data = JsonConvert.DeserializeObject<ReportSchema>(jsonData);
-            report.Database.Tables[0].SetDataSource(data.ReportData);
-            report.PrintToPrinter(1, false, 0, 0);
+            //report.Database.Tables[0].SetDataSource(data.ReportData);
+            //report.PrintToPrinter(1, false, 0, 0);
         }
     }
 

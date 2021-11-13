@@ -20,10 +20,10 @@ namespace ReportB
 
         public void Print(string jsonData, string printerName)
         {
-            var report = new CrystalReportB();
+            //var report = new CrystalReportB();
             var data = JsonConvert.DeserializeObject<ReportSchema>(jsonData);
-            report.Database.Tables[0].SetDataSource(data.ReportData);
-            report.PrintToPrinter(1, false, 0, 0);
+            //report.Database.Tables[0].SetDataSource(data.ReportData);
+            //report.PrintToPrinter(1, false, 0, 0);
         }
     }
 }

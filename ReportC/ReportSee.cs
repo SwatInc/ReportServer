@@ -23,12 +23,12 @@ namespace ReportC
             {
                 var reportModel = JsonConvert.DeserializeObject<AnalysisReport>(jsonData);
 
-                var analysisReport = new Report();
-                //analysisReport.Database.Tables[0].SetDataSource(new List<ReportMiscData>() { GetPatientData(reportModel) });
-                //analysisReport.Database.Tables[1].SetDataSource(reportModel.ReportData.Results);
-                analysisReport.SetDataSource(new object[] { GetPatientData(reportModel), reportModel.ReportData.Results });
+                //var analysisReport = new Report();
+                ////analysisReport.Database.Tables[0].SetDataSource(new List<ReportMiscData>() { GetPatientData(reportModel) });
+                ////analysisReport.Database.Tables[1].SetDataSource(reportModel.ReportData.Results);
+                //analysisReport.SetDataSource(new object[] { GetPatientData(reportModel), reportModel.ReportData.Results });
 
-                analysisReport.PrintToPrinter(1, false, 0, 0);
+                //analysisReport.PrintToPrinter(1, false, 0, 0);
             }
             catch (Exception ex)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {
