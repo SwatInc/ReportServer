@@ -1,7 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using DevExpress.XtraReports.UI;
+using DevExpress.XtraPrinting;
+using Newtonsoft.Json;
 using ReportServer.Extensibility.Interfaces;
 using System;
 using System.Collections.Generic;
+using DevExpress.XtraReports;
 
 namespace ReportC
 {
@@ -21,16 +24,19 @@ namespace ReportC
         {
             try
             {
-                var reportModel = JsonConvert.DeserializeObject<AnalysisReport>(jsonData);
+                //var reportModel = JsonConvert.DeserializeObject<AnalysisReport>(jsonData);
 
-                //var analysisReport = new Report();
-                ////analysisReport.Database.Tables[0].SetDataSource(new List<ReportMiscData>() { GetPatientData(reportModel) });
-                ////analysisReport.Database.Tables[1].SetDataSource(reportModel.ReportData.Results);
+                var analysisReport  = new XtraReportC();
+                //analysisReport.Database.Tables[0].SetDataSource(new List<ReportMiscData>() { GetPatientData(reportModel) });
+                //analysisReport.Database.Tables[1].SetDataSource(reportModel.ReportData.Results);
                 //analysisReport.SetDataSource(new object[] { GetPatientData(reportModel), reportModel.ReportData.Results });
 
-                //analysisReport.PrintToPrinter(1, false, 0, 0);
+                //analysisReport.DataSource = new object[] { GetPatientData(reportModel), reportModel.ReportData.Results };
+                analysisReport.PrinterName = "doPDF 10";
+                var printTool = new ReportPrintTool(analysisReport);
+                printTool.Print();
             }
-            catch (Exception ex)
+            catch (Exception)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {
                 throw;
             }
