@@ -5,6 +5,7 @@ using ReportServer.Extensibility.Interfaces;
 using System;
 using System.Collections.Generic;
 using DevExpress.XtraReports;
+using CD4.DataLibrary.DataAccess;
 
 namespace ReportC
 {
@@ -20,10 +21,12 @@ namespace ReportC
             return typeof(AnalysisReport);
         }
 
-        public void Print(string jsonData, string printerName)
+        public  void Print(string jsonData, string printerName)
         {
             try
             {
+                var test = new GlobalSettingsDataAccess();
+                var data = test.ReadAllGlobalSettingsAsync().GetAwaiter().GetResult();
                 //var reportModel = JsonConvert.DeserializeObject<AnalysisReport>(jsonData);
 
                 var analysisReport  = new XtraReportC();

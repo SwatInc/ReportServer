@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CD4.DataLibrary.DataAccess;
+using Newtonsoft.Json;
 using ReportServer.Extensibility.Interfaces;
 using ReportServer.Models;
 using System;
@@ -28,6 +29,7 @@ namespace ReportServer.Views
             InitializeComponent();
             InitializeSettings();
             InitializeExtensions();
+            //InitializeDataLib();
 
             DetectedReportDataFile += OnDetectedReportDataFile;
             InitializeMonitoring += OnInitializeMonitoringAsync;
@@ -36,6 +38,12 @@ namespace ReportServer.Views
             FormClosing += MainView_FormClosing;
             IsMonitoringIncoming = true;
             InitializeMonitoring?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void InitializeDataLib()
+        {
+            var test = new GlobalSettingsDataAccess();
+            var data = test.ReadAllGlobalSettingsAsync().GetAwaiter().GetResult();
         }
 
         private void MainView_FormClosing(object sender, FormClosingEventArgs e)
