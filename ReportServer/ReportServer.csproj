@@ -141,6 +141,10 @@
       <Project>{66FB9BAF-B529-4DFD-B0E9-E41B78F4EA76}</Project>
       <Name>CD4.DataLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SwatInc\CD4\CD4.Entensibility.ReportingFramework\CD4.Entensibility.ReportingFramework.csproj">
+      <Project>{e48babf5-f903-44a6-9e87-8219ac5f13c6}</Project>
+      <Name>CD4.Entensibility.ReportingFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReportServer.Extensibility\ReportServer.Extensibility.csproj">
       <Project>{3cef4fbc-fd4b-41de-92d9-6351c0e7643e}</Project>
       <Name>ReportServer.Extensibility</Name>
