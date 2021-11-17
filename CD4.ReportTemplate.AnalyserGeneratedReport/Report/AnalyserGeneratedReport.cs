@@ -4,11 +4,11 @@ using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace ReportC
+namespace CD4.ReportTemplate.AnalyserGeneratedReport.Report
 {
-    public partial class XtraReportC : DevExpress.XtraReports.UI.XtraReport
+    public partial class AnalyserGeneratedReport : DevExpress.XtraReports.UI.XtraReport
     {
-        public XtraReportC()
+        public AnalyserGeneratedReport()
         {
             InitializeComponent();
         }
