@@ -4,6 +4,7 @@ using CD4.ReportTemplate.MedlabClinical.Models;
 using DevExpress.XtraReports.UI;
 using Newtonsoft.Json;
 using ReportServer.Extensibility.Interfaces;
+using ReportServer.Extensibility.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace CD4.ReportTemplate.MedlabClinical
     {
         private string _printerName;
         private event EventHandler<ReportQueryParameters> GetReportData;
+        public event EventHandler<ReportServerNotificationModel> OnPopupMessageRequired;
 
         public string ReportName { get; set; }
 
@@ -22,6 +24,7 @@ namespace CD4.ReportTemplate.MedlabClinical
         {
             ReportName = "Medlab.ClinicalTemplate";
             GetReportData += OnGetReportData;
+
         }
 
         private async void OnGetReportData(object sender, ReportQueryParameters e)
@@ -33,12 +36,13 @@ namespace CD4.ReportTemplate.MedlabClinical
                 if (data is null) { return; }
 
                 var mappedData = MapReportData(data);
+                OnPopupMessageRequired?.Invoke(this, new ReportServerNotificationModel 
+                {Message= $"Printing report {data[0].Assays[0].Cin}", NotifyIcon = System.Windows.Forms.ToolTipIcon.Info });
                 ExecuteReportPrint(mappedData);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                ShowError(ex);
             }
         }
 
@@ -49,7 +53,23 @@ namespace CD4.ReportTemplate.MedlabClinical
             report.DataSource = mappedData;
 
             var printTool = new ReportPrintTool(report);
-            printTool.Print();
+            try
+            {
+                printTool.Print();
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+        }
+
+        private void ShowError(Exception ex)
+        {
+            OnPopupMessageRequired?.Invoke(this, new ReportServerNotificationModel()
+            {
+                Message = ex.Message,
+                NotifyIcon = System.Windows.Forms.ToolTipIcon.Error
+            });
         }
 
         private List<Entensibility.ReportingFramework.Models.AnalysisRequestReportModel>
@@ -132,10 +152,9 @@ namespace CD4.ReportTemplate.MedlabClinical
                 var parameter = JsonConvert.DeserializeObject<ReportQueryParameters>(jsonData);
                 GetReportData?.Invoke(this, parameter);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                ShowError(ex);
             }
         }
     }

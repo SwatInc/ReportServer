@@ -4,6 +4,7 @@ using CD4.ReportTemplate.AnalyserGeneratedReport.Models;
 using DevExpress.XtraReports.UI;
 using Newtonsoft.Json;
 using ReportServer.Extensibility.Interfaces;
+using ReportServer.Extensibility.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
     {
         private string _printerName { get; set; }
         private event EventHandler<ReportQueryParameters> GetReportData;
+        public event EventHandler<ReportServerNotificationModel> OnPopupMessageRequired;
 
         public string ReportName { get; set; }
 
