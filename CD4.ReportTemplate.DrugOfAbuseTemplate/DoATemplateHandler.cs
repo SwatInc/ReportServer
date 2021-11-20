@@ -1,5 +1,4 @@
 ﻿using CD4.DataLibrary.DataAccess;
-using CD4.DataLibrary.Models.ReportModels;
 using CD4.Entensibility.ReportingFramework.Models;
 using CD4.ReportTemplate.DrugOfAbuseTemplate.Models;
 using DevExpress.XtraReports.UI;
@@ -8,10 +7,7 @@ using ReportServer.Extensibility.Interfaces;
 using ReportServer.Extensibility.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CD4.ReportTemplate.DrugOfAbuseTemplate
 {
@@ -40,11 +36,19 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplate
                 var mappedData = MapReportData(data);
                 ExecuteReportPrint(mappedData);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                ShowError(ex);
             }
+        }
+
+        private void ShowError(Exception ex)
+        {
+            OnPopupMessageRequired?.Invoke(this, new ReportServerNotificationModel()
+            {
+                Message = ex.Message,
+                NotifyIcon = System.Windows.Forms.ToolTipIcon.Error
+            });
         }
 
         private void ExecuteReportPrint
@@ -53,8 +57,16 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplate
             var report = new Report.AnalysisReportDoA();
             report.DataSource = mappedData;
 
-            var printTool = new ReportPrintTool(report);
-            printTool.Print();
+            try
+            {
+                var printTool = new ReportPrintTool(report);
+                printTool.Print();
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+
         }
 
         private List<DoAAnalysisRequestReportModel>
@@ -117,10 +129,9 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplate
                 var parameter = JsonConvert.DeserializeObject<ReportQueryParameters>(jsonData);
                 GetReportData?.Invoke(this, parameter);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                ShowError(ex);
             }
         }
     }

@@ -36,12 +36,21 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
                 var mappedData = MapReportData(data);
                 ExecuteReportPrint(mappedData);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                ShowError(ex);
             }
         }
+
+        private void ShowError(Exception ex)
+        {
+            OnPopupMessageRequired?.Invoke(this, new ReportServerNotificationModel()
+            {
+                Message = ex.Message,
+                NotifyIcon = System.Windows.Forms.ToolTipIcon.Error
+            });
+        }
+
 
         private void ExecuteReportPrint
             (List<Entensibility.ReportingFramework.Models.AnalysisRequestReportModel> mappedData)
@@ -49,8 +58,16 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
             var report = new Report.AnalyserGeneratedReport();
             report.DataSource = mappedData;
 
-            var printTool = new ReportPrintTool(report);
-            printTool.Print();
+            try
+            {
+                var printTool = new ReportPrintTool(report);
+                printTool.Print();
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
+ 
         }
 
         private List<Entensibility.ReportingFramework.Models.AnalysisRequestReportModel>
@@ -137,10 +154,9 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
                 var parameter = JsonConvert.DeserializeObject<ReportQueryParameters>(jsonData);
                 GetReportData?.Invoke(this, parameter);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                ShowError(ex);
             }
         }
     }
