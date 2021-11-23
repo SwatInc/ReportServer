@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using CD4.DataLibrary.DataAccess;
+using DevExpress.XtraEditors;
+using Newtonsoft.Json;
 using ReportServer.Extensibility.Interfaces;
+using ReportServer.Extensibility.Models;
 using ReportServer.Models;
 using System;
 using System.Collections.Generic;
@@ -28,6 +31,7 @@ namespace ReportServer.Views
             InitializeComponent();
             InitializeSettings();
             InitializeExtensions();
+            //InitializeDataLib();
 
             DetectedReportDataFile += OnDetectedReportDataFile;
             InitializeMonitoring += OnInitializeMonitoringAsync;
@@ -36,6 +40,12 @@ namespace ReportServer.Views
             FormClosing += MainView_FormClosing;
             IsMonitoringIncoming = true;
             InitializeMonitoring?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void InitializeDataLib()
+        {
+            var test = new GlobalSettingsDataAccess();
+            var data = test.ReadAllGlobalSettingsAsync().GetAwaiter().GetResult();
         }
 
         private void MainView_FormClosing(object sender, FormClosingEventArgs e)
@@ -149,6 +159,7 @@ namespace ReportServer.Views
                     foreach (var type in GetAllTypesThatImplementInterface<IExtensibility>(assembly))
                     {
                         var instance = (IExtensibility)Activator.CreateInstance(type);
+                        instance.OnPopupMessageRequired += Instance_OnPopupMessageRequired;
                         _loadedExtensions.Add(instance);
                     }
                 }
@@ -158,6 +169,11 @@ namespace ReportServer.Views
                 MessageBox.Show($"{ex.Message}\n{ex.StackTrace}");
             }
 
+        }
+
+        private void Instance_OnPopupMessageRequired(object sender, ReportServerNotificationModel e)
+        {
+            notifyIcon.ShowBalloonTip(10, "Report Server notification", e.Message, e.NotifyIcon);
         }
 
         private IEnumerable<Type> GetAllTypesThatImplementInterface<T>(Assembly assembly)
