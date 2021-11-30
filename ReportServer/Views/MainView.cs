@@ -62,10 +62,14 @@ namespace ReportServer.Views
                 var jsonData = File.ReadAllText(reportDataFileInfo.FullName);
                 PrintReport(jsonData);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+                {
+                    Message = ex.Message,
+                    NotifyIcon = ToolTipIcon.Error
+                });
             }
         }
 
@@ -83,6 +87,11 @@ namespace ReportServer.Views
                         {
                             foreach (var controlFile in controlFiles)
                             {
+                                Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+                                {
+                                    Message = $"Detected a request for report generation.\n{controlFile}",
+                                    NotifyIcon = ToolTipIcon.Info
+                                });
                                 var dataFile = controlFile
                                     .Replace(_settings.ControlExtension, _settings.ReportExtension);
 
@@ -94,9 +103,13 @@ namespace ReportServer.Views
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        throw;
+                        Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+                        {
+                            Message = ex.Message,
+                            NotifyIcon = ToolTipIcon.Error
+                        });
                     }
 
                     Task.Delay(_settings.PolFrequencyInSec * 1000).GetAwaiter().GetResult();
@@ -114,10 +127,10 @@ namespace ReportServer.Views
                     fileInfo.Delete();
                 }
             }
-            catch (Exception)
+            catch (Exception ex) 
             {
-
-                throw;
+                Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel() 
+                { Message = ex.Message, NotifyIcon = ToolTipIcon.Error }); 
             }
 
         }
@@ -166,7 +179,11 @@ namespace ReportServer.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message}\n{ex.StackTrace}");
+                Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+                {
+                    Message = $"{ex.Message}\n{ex.StackTrace}",
+                    NotifyIcon = ToolTipIcon.Error
+                });
             }
 
         }

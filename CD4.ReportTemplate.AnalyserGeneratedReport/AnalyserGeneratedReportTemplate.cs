@@ -31,7 +31,8 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
             {
                 var reportDataAccess = new ReportsDataAccess();
                 var data = await reportDataAccess.GetAnalysisReportByCinAsync(e.EpisodeNumber, 1);
-                if (data is null) { return; }
+                if (data is null) { throw new Exception("No results for printing."); }
+                if (data.Count == 0) { throw new Exception("No results for printing."); }
 
                 var mappedData = MapReportData(data);
                 ExecuteReportPrint(mappedData);

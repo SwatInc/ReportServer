@@ -6,7 +6,7 @@ using DevExpress.XtraReports.UI;
 
 namespace CD4.ReportTemplate.MedlabClinical.Report
 {
-    public partial class AnalysisReport: DevExpress.XtraReports.UI.XtraReport
+    public partial class AnalysisReport : DevExpress.XtraReports.UI.XtraReport
     {
         public AnalysisReport()
         {

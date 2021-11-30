@@ -32,8 +32,9 @@ namespace CD4.ReportTemplate.MedlabClinical
             try
             {
                 var reportDataAccess = new ReportsDataAccess();
-                var data = await reportDataAccess.GetAnalysisReportByCinAsync(e.EpisodeNumber, 1);
-                if (data is null) { return; }
+                var data = await reportDataAccess.GetAnalysisReportByCinAsync(e.Sid, 1);
+                if (data is null) { throw new Exception("No results for printing.");}
+                if (data.Count == 0) { throw new Exception("No results for printing.");}
 
                 var mappedData = MapReportData(data);
                 OnPopupMessageRequired?.Invoke(this, new ReportServerNotificationModel 
