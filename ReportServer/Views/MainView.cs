@@ -1,18 +1,14 @@
 ﻿using CD4.DataLibrary.DataAccess;
-using DevExpress.XtraEditors;
 using Newtonsoft.Json;
 using ReportServer.Extensibility.Interfaces;
 using ReportServer.Extensibility.Models;
 using ReportServer.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -40,6 +36,17 @@ namespace ReportServer.Views
             FormClosing += MainView_FormClosing;
             IsMonitoringIncoming = true;
             InitializeMonitoring?.Invoke(this, EventArgs.Empty);
+
+            ShowInitializeCompletedPopup();
+        }
+
+        private void ShowInitializeCompletedPopup()
+        {
+            Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+            {
+                Message = "CD4 report server initialization successful",
+                NotifyIcon = ToolTipIcon.Info
+            });
         }
 
         private void InitializeDataLib()
@@ -127,10 +134,10 @@ namespace ReportServer.Views
                     fileInfo.Delete();
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel() 
-                { Message = ex.Message, NotifyIcon = ToolTipIcon.Error }); 
+                Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+                { Message = ex.Message, NotifyIcon = ToolTipIcon.Error });
             }
 
         }
@@ -142,7 +149,7 @@ namespace ReportServer.Views
 
         private void PrintReport(string jsonReportData)
         {
-            if(_loadedExtensions.Count == 0) { return; }
+            if (_loadedExtensions.Count == 0) { return; }
 
             foreach (var extension in _loadedExtensions)
             {
@@ -150,7 +157,24 @@ namespace ReportServer.Views
 
                 if (extension.ReportName == reportData.TemplateName.ToString())
                 {
-                    extension.Print(jsonReportData, "");
+                    if (string.IsNullOrEmpty((string)reportData.EpisodeNumber) == false)
+                    {
+                        extension.Print(jsonReportData, "", ReportMode.Episode);
+                    }
+                    else if (string.IsNullOrEmpty((string)reportData.Sid) == false)
+                    {
+                        extension.Print(jsonReportData, "", ReportMode.Sample);
+                    }
+                    else
+                    {
+                        Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+                        {
+                            Message = "Cannot detect an episode number or sample number to generate the report. Request ignored!",
+                            NotifyIcon = ToolTipIcon.Warning
+                        });
+                    }
+
+
                 }
             }
 
@@ -164,7 +188,7 @@ namespace ReportServer.Views
                 List<Assembly> allAssemblies = new List<Assembly>();
                 string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-                foreach (string dll in Directory.GetFiles(Path.Combine(path,"Extensions"), "*.dll"))
+                foreach (string dll in Directory.GetFiles(Path.Combine(path, "Extensions"), "*.dll"))
                     allAssemblies.Add(Assembly.LoadFile(dll));
 
                 foreach (var assembly in allAssemblies)

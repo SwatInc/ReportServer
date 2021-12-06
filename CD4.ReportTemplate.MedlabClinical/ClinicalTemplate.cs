@@ -143,7 +143,7 @@ namespace CD4.ReportTemplate.MedlabClinical
             return typeof(ReportQueryParameters);
         }
 
-        public void Print(string jsonData, string printerName)
+        public void Print(string jsonData, string printerName, ReportMode reportMode)
         {
             if (string.IsNullOrEmpty(jsonData)) { throw new ArgumentException("No data or parameters passed in for report generation."); }
             _printerName = string.IsNullOrEmpty(printerName) == false ? printerName : null;

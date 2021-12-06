@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IExtensibility.cs" />
+    <Compile Include="Models\ReportMode.cs" />
     <Compile Include="Models\ReportServerNotificationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

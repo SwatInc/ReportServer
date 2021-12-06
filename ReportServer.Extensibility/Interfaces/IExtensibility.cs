@@ -8,6 +8,6 @@ namespace ReportServer.Extensibility.Interfaces
         event EventHandler<ReportServerNotificationModel> OnPopupMessageRequired;
         string ReportName { get;}
         Type GetModelType();
-        void Print(string jsonData, string printerName);
+        void Print(string jsonData, string printerName, ReportMode reportMode);
     }
 }
