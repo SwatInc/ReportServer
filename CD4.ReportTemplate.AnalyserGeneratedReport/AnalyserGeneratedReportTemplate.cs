@@ -145,7 +145,7 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
             return typeof(ReportQueryParameters);
         }
 
-        public void Print(string jsonData, string printerName, ReportMode reportMode)
+        public void Print(string jsonData, string printerName, ReportMode reportMode, ReportAction reportAction = ReportAction.Print)
         {
             if (string.IsNullOrEmpty(jsonData)) { throw new ArgumentException("No data or parameters passed in for report generation."); }
             _printerName = string.IsNullOrEmpty(printerName) == false ? printerName : null;

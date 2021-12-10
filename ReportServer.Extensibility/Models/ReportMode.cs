@@ -11,4 +11,11 @@ namespace ReportServer.Extensibility.Models
         Sample,
         Episode
     }
+
+    public enum ReportAction
+    {
+        Print,
+        Preview,
+        Export
+    }
 }

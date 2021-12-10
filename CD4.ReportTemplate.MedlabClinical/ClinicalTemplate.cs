@@ -14,6 +14,9 @@ namespace CD4.ReportTemplate.MedlabClinical
     public class ClinicalTemplate : IExtensibility
     {
         private string _printerName;
+        private ReportMode _reportMode;
+        private ReportAction _reportAction;
+
         private event EventHandler<ReportQueryParameters> GetReportData;
         public event EventHandler<ReportServerNotificationModel> OnPopupMessageRequired;
 
@@ -32,19 +35,58 @@ namespace CD4.ReportTemplate.MedlabClinical
             try
             {
                 var reportDataAccess = new ReportsDataAccess();
-                var data = await reportDataAccess.GetAnalysisReportByCinAsync(e.Sid, 1);
-                if (data is null) { throw new Exception("No results for printing.");}
-                if (data.Count == 0) { throw new Exception("No results for printing.");}
+                List<AnalysisRequestReportModel> data;
+                switch (_reportMode)
+                {
+                    case ReportMode.Sample:
+                         data = await reportDataAccess.GetAnalysisReportByCinAsync(e.Sid, 1);
+
+                        break;
+                    case ReportMode.Episode:
+                        data  = await reportDataAccess.GetAnalysisReportForEpisodeAsync(e.EpisodeNumber, 1);
+                        break;
+                    default:
+                        data = null;
+                        break;
+                }
+
+                if (data is null) { throw new Exception("No results for printing."); }
+                if (data.Count == 0) { throw new Exception("No results for printing."); }
 
                 var mappedData = MapReportData(data);
-                OnPopupMessageRequired?.Invoke(this, new ReportServerNotificationModel 
-                {Message= $"Printing report {data[0].Assays[0].Cin}", NotifyIcon = System.Windows.Forms.ToolTipIcon.Info });
-                ExecuteReportPrint(mappedData);
+
+
+                switch (_reportAction)
+                {
+                    case ReportAction.Print:
+                        OnPopupMessageRequired?.Invoke(this, new ReportServerNotificationModel
+                        { Message = $"Printing report {data[0].Assays[0].Cin}", NotifyIcon = System.Windows.Forms.ToolTipIcon.Info });
+                        ExecuteReportPrint(mappedData);
+                        break;
+
+                    case ReportAction.Preview:
+                        throw new Exception("Report previewing not supported yet!");
+                    case ReportAction.Export:
+                        ExecuteReportExport(mappedData);
+                        break;
+
+                    default:
+                        break;
+                }
+
             }
             catch (Exception ex)
             {
                 ShowError(ex);
             }
+        }
+
+        private void ExecuteReportExport(List<Entensibility.ReportingFramework.Models.AnalysisRequestReportModel> mappedData)
+        {
+            var report = new Report.AnalysisReport();
+            report.DataSource = mappedData;
+            report.ExportToPdf($"C:\\ReportJsons\\{report.DisplayName}");
+
         }
 
         private void ExecuteReportPrint
@@ -54,6 +96,7 @@ namespace CD4.ReportTemplate.MedlabClinical
             report.DataSource = mappedData;
 
             var printTool = new ReportPrintTool(report);
+
             try
             {
                 printTool.Print();
@@ -143,10 +186,12 @@ namespace CD4.ReportTemplate.MedlabClinical
             return typeof(ReportQueryParameters);
         }
 
-        public void Print(string jsonData, string printerName, ReportMode reportMode)
+        public void Print(string jsonData, string printerName, ReportMode reportMode, ReportAction reportAction = ReportAction.Print)
         {
             if (string.IsNullOrEmpty(jsonData)) { throw new ArgumentException("No data or parameters passed in for report generation."); }
             _printerName = string.IsNullOrEmpty(printerName) == false ? printerName : null;
+            _reportMode = reportMode;
+            _reportAction = reportAction;
 
             try
             {

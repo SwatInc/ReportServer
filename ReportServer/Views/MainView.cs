@@ -49,6 +49,15 @@ namespace ReportServer.Views
             });
         }
 
+        private void ShowApplicationExitPopUp()
+        {
+            Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+            {
+                Message = "CD4 report server is exiting!",
+                NotifyIcon = ToolTipIcon.Warning
+            });
+        }
+
         private void InitializeDataLib()
         {
             var test = new GlobalSettingsDataAccess();
@@ -226,6 +235,7 @@ namespace ReportServer.Views
 
         private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
         {
+            ShowApplicationExitPopUp();
             IsMonitoringIncoming = false;
             notifyIcon.Visible = false;
             Environment.Exit(0);
