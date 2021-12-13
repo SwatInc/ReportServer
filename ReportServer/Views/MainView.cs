@@ -1,4 +1,6 @@
 ﻿using CD4.DataLibrary.DataAccess;
+using DevExpress.Skins;
+using DevExpress.XtraReports.UI;
 using Newtonsoft.Json;
 using ReportServer.Extensibility.Interfaces;
 using ReportServer.Extensibility.Models;
@@ -6,6 +8,7 @@ using ReportServer.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,11 +17,17 @@ using System.Windows.Forms;
 
 namespace ReportServer.Views
 {
-    public partial class MainView : Form
+    public partial class MainView : DevExpress.XtraEditors.XtraForm
     {
         private List<IExtensibility> _loadedExtensions;
         private ApplicationSettings _settings { get; set; }
         private bool IsMonitoringIncoming { get; set; }
+        private string _reportExportBasepath;
+        private const int CP_NOCLOSE_BUTTON = 0x200;
+
+
+        private delegate void PreviewReport(XtraReport report);
+        private PreviewReport _previewReportDelegate;
 
         private event EventHandler InitializeMonitoring;
         private event EventHandler<FileInfo> DetectedReportDataFile;
@@ -27,8 +36,9 @@ namespace ReportServer.Views
             InitializeComponent();
             InitializeSettings();
             InitializeExtensions();
-            //InitializeDataLib();
+            _previewReportDelegate = new PreviewReport(PreviewReportDelegateHandler);
 
+            InitializeDataLib();
             DetectedReportDataFile += OnDetectedReportDataFile;
             InitializeMonitoring += OnInitializeMonitoringAsync;
 
@@ -40,28 +50,44 @@ namespace ReportServer.Views
             ShowInitializeCompletedPopup();
         }
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= CP_NOCLOSE_BUTTON;
+                return cp;
+            }
+        }
+
         private void ShowInitializeCompletedPopup()
         {
-            Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
-            {
-                Message = "CD4 report server initialization successful",
-                NotifyIcon = ToolTipIcon.Info
-            });
+            InfoPopup("CD4 report server initialization successful");
         }
 
         private void ShowApplicationExitPopUp()
         {
-            Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
-            {
-                Message = "CD4 report server is exiting!",
-                NotifyIcon = ToolTipIcon.Warning
-            });
+            WarningPopup("CD4 report server is exiting!");
         }
 
-        private void InitializeDataLib()
+        private async void InitializeDataLib()
         {
-            var test = new GlobalSettingsDataAccess();
-            var data = test.ReadAllGlobalSettingsAsync().GetAwaiter().GetResult();
+            try
+            {
+                var test = new GlobalSettingsDataAccess();
+                var data = await test.ReadAllGlobalSettingsAsync().ConfigureAwait(true);
+                _reportExportBasepath = data?.ReportExportBasePath;
+                InfoPopup($"Report export base path: {_reportExportBasepath}");
+            }
+            catch(SqlException)
+            {
+                ExceptionPopup("Cannot access database [SqlException].\n" +
+                    "To enable report export, please restart ReportServer after database access is restored.");
+            }
+            catch (Exception ex)
+            {
+                ExceptionPopup(ex);
+            }
         }
 
         private void MainView_FormClosing(object sender, FormClosingEventArgs e)
@@ -80,12 +106,7 @@ namespace ReportServer.Views
             }
             catch (Exception ex)
             {
-
-                Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
-                {
-                    Message = ex.Message,
-                    NotifyIcon = ToolTipIcon.Error
-                });
+                ExceptionPopup(ex);
             }
         }
 
@@ -103,11 +124,8 @@ namespace ReportServer.Views
                         {
                             foreach (var controlFile in controlFiles)
                             {
-                                Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
-                                {
-                                    Message = $"Detected a request for report generation.\n{controlFile}",
-                                    NotifyIcon = ToolTipIcon.Info
-                                });
+                                InfoPopup($"Detected a request for report generation.\n{controlFile}");
+
                                 var dataFile = controlFile
                                     .Replace(_settings.ControlExtension, _settings.ReportExtension);
 
@@ -121,11 +139,7 @@ namespace ReportServer.Views
                     }
                     catch (Exception ex)
                     {
-                        Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
-                        {
-                            Message = ex.Message,
-                            NotifyIcon = ToolTipIcon.Error
-                        });
+                        ExceptionPopup(ex);
                     }
 
                     Task.Delay(_settings.PolFrequencyInSec * 1000).GetAwaiter().GetResult();
@@ -145,14 +159,16 @@ namespace ReportServer.Views
             }
             catch (Exception ex)
             {
-                Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
-                { Message = ex.Message, NotifyIcon = ToolTipIcon.Error });
+                ExceptionPopup(ex);
             }
 
         }
 
         private void InitializeSettings()
         {
+            SkinManager.EnableFormSkins();
+            SkinManager.EnableMdiFormSkins();
+
             _settings = JsonConvert.DeserializeObject<ApplicationSettings>(Properties.Settings.Default.AppSettingsJson);
         }
 
@@ -164,7 +180,8 @@ namespace ReportServer.Views
             {
                 dynamic reportData = JsonConvert.DeserializeObject(jsonReportData);
 
-                if (extension.ReportName == reportData.TemplateName.ToString())
+                if (ExtensionMatchedWithTemplateName
+                    (extension.ReportName, reportData.TemplateName.ToString()))
                 {
                     if (string.IsNullOrEmpty((string)reportData.EpisodeNumber) == false)
                     {
@@ -176,17 +193,24 @@ namespace ReportServer.Views
                     }
                     else
                     {
-                        Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
-                        {
-                            Message = "Cannot detect an episode number or sample number to generate the report. Request ignored!",
-                            NotifyIcon = ToolTipIcon.Warning
-                        });
+                        WarningPopup("Cannot detect an episode number or sample number to " +
+                            "generate the report. Request ignored!");
                     }
 
 
                 }
             }
 
+        }
+
+        private bool ExtensionMatchedWithTemplateName
+            (string extensionReportName, string templateName)
+        {
+            foreach (var template in templateName.Split(','))
+            {
+                return extensionReportName == template.Trim();
+            }
+            return false;
         }
 
         private void InitializeExtensions()
@@ -206,25 +230,106 @@ namespace ReportServer.Views
                     {
                         var instance = (IExtensibility)Activator.CreateInstance(type);
                         instance.OnPopupMessageRequired += Instance_OnPopupMessageRequired;
+                        instance.OnReportExportRequest += Instance_OnReportExportRequest;
+                        instance.OnReportPreviewRequest += Instance_OnReportPreviewRequest;
                         _loadedExtensions.Add(instance);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
-                {
-                    Message = $"{ex.Message}\n{ex.StackTrace}",
-                    NotifyIcon = ToolTipIcon.Error
-                });
+                ExceptionPopup(ex);
             }
 
         }
 
+        private void Instance_OnReportPreviewRequest(object sender, XtraReport e)
+        {
+            documentViewer.Invoke(_previewReportDelegate, new[] { e });
+        }
+
+        private void PreviewReportDelegateHandler(XtraReport report)
+        {
+            documentViewer.DocumentSource = report;
+            documentViewer.InitiateDocumentCreation();
+            WindowState = FormWindowState.Maximized;
+            Activate();
+        }
+
+        private void Instance_OnReportExportRequest(object sender, XtraReport e)
+        {
+            try 
+            { 
+                ValidateReportBasePath();
+                if (string.IsNullOrEmpty(e.DisplayName))
+                {
+                    e.DisplayName = $"Report_{Guid.NewGuid()}.pdf";
+                }
+
+                e.ExportToPdf($"{_reportExportBasepath}{e.DisplayName}");
+            }
+            catch (Exception ex)
+            {
+                ExceptionPopup(ex);
+            }
+        }
+
+        private void ValidateReportBasePath()
+        {
+            if (string.IsNullOrEmpty(_reportExportBasepath?.Trim()) == false) { return; }
+            WarningPopup("Report export base path is not available. Trying to get base path before exporting.");
+
+            try
+            {
+                InitializeDataLib();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Failed to fetch report base path. Exporting will be aborted.");
+            }
+        }
+
+
+        #region PopUP Methods
+        private void ExceptionPopup(string exceptionMessage)
+        {
+            Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+            {
+                Message = exceptionMessage,
+                NotifyIcon = ToolTipIcon.Error
+            });
+        }
+        private void ExceptionPopup(Exception ex)
+        {
+            Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+            {
+                Message = $"{ex.Message}\n{ex.StackTrace}",
+                NotifyIcon = ToolTipIcon.Error
+            });
+        }
+        private void WarningPopup(string warnMessage)
+        {
+            Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+            {
+                Message = warnMessage,
+                NotifyIcon = ToolTipIcon.Warning
+            });
+        }
+
+        private void InfoPopup(string infoMessage)
+        {
+            Instance_OnPopupMessageRequired(this, new ReportServerNotificationModel()
+            {
+                Message = infoMessage,
+                NotifyIcon = ToolTipIcon.Info
+            });
+        }
         private void Instance_OnPopupMessageRequired(object sender, ReportServerNotificationModel e)
         {
             notifyIcon.ShowBalloonTip(10, "Report Server notification", e.Message, e.NotifyIcon);
         }
+
+        #endregion
 
         private IEnumerable<Type> GetAllTypesThatImplementInterface<T>(Assembly assembly)
         {

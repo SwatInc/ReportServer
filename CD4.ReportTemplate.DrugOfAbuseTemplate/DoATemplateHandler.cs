@@ -16,6 +16,8 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplate
         private string _printerName { get; set; }
         private event EventHandler<ReportQueryParameters> GetReportData;
         public event EventHandler<ReportServerNotificationModel> OnPopupMessageRequired;
+        public event EventHandler<XtraReport> OnReportExportRequest;
+        public event EventHandler<XtraReport> OnReportPreviewRequest;
 
         public string ReportName { get; set; }
 

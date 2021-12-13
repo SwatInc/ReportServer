@@ -19,6 +19,8 @@ namespace CD4.ReportTemplate.MedlabClinical
 
         private event EventHandler<ReportQueryParameters> GetReportData;
         public event EventHandler<ReportServerNotificationModel> OnPopupMessageRequired;
+        public event EventHandler<XtraReport> OnReportExportRequest;
+        public event EventHandler<XtraReport> OnReportPreviewRequest;
 
         public string ReportName { get; set; }
 
@@ -55,6 +57,7 @@ namespace CD4.ReportTemplate.MedlabClinical
 
                 var mappedData = MapReportData(data);
 
+                _reportAction = ReportAction.Export;
 
                 switch (_reportAction)
                 {
@@ -65,12 +68,15 @@ namespace CD4.ReportTemplate.MedlabClinical
                         break;
 
                     case ReportAction.Preview:
-                        throw new Exception("Report previewing not supported yet!");
+                        OnReportPreviewRequest?.Invoke(this, new Report.AnalysisReport() { DataSource = mappedData });
+                        break;
                     case ReportAction.Export:
-                        ExecuteReportExport(mappedData);
+                        OnReportExportRequest?.Invoke(this, new Report.AnalysisReport() { DataSource = mappedData });
                         break;
 
                     default:
+                        OnPopupMessageRequired?.Invoke(this, new ReportServerNotificationModel
+                        { Message = "Report action not specified. Actions: print, preview, export.", NotifyIcon = System.Windows.Forms.ToolTipIcon.Error });
                         break;
                 }
 
@@ -79,14 +85,6 @@ namespace CD4.ReportTemplate.MedlabClinical
             {
                 ShowError(ex);
             }
-        }
-
-        private void ExecuteReportExport(List<Entensibility.ReportingFramework.Models.AnalysisRequestReportModel> mappedData)
-        {
-            var report = new Report.AnalysisReport();
-            report.DataSource = mappedData;
-            report.ExportToPdf($"C:\\ReportJsons\\{report.DisplayName}");
-
         }
 
         private void ExecuteReportPrint
