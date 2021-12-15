@@ -14,8 +14,9 @@ namespace ReportServer.Extensibility.Models
 
     public enum ReportAction
     {
-        Print,
+        None,
         Preview,
-        Export
+        Export,
+        Print
     }
 }

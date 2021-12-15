@@ -57,8 +57,6 @@ namespace CD4.ReportTemplate.MedlabClinical
 
                 var mappedData = MapReportData(data);
 
-                _reportAction = ReportAction.Export;
-
                 switch (_reportAction)
                 {
                     case ReportAction.Print:
