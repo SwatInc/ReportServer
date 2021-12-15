@@ -179,17 +179,17 @@ namespace ReportServer.Views
             foreach (var extension in _loadedExtensions)
             {
                 dynamic reportData = JsonConvert.DeserializeObject(jsonReportData);
-
+                var reportAction = GetReportAction(reportData);
                 if (ExtensionMatchedWithTemplateName
                     (extension.ReportName, reportData.TemplateName.ToString()))
                 {
                     if (string.IsNullOrEmpty((string)reportData.EpisodeNumber) == false)
                     {
-                        extension.Print(jsonReportData, "", ReportMode.Episode);
+                        extension.Print(jsonReportData, "", ReportMode.Episode, reportAction);
                     }
                     else if (string.IsNullOrEmpty((string)reportData.Sid) == false)
                     {
-                        extension.Print(jsonReportData, "", ReportMode.Sample);
+                        extension.Print(jsonReportData, "", ReportMode.Sample, reportAction);
                     }
                     else
                     {
@@ -197,10 +197,23 @@ namespace ReportServer.Views
                             "generate the report. Request ignored!");
                     }
 
-
+                }
+                else
+                {
+                    ExceptionPopup($"Cannot find the plugin for report template [ {reportData.TemplateName.ToString()} ] specified.");
                 }
             }
 
+        }
+
+        private ReportAction GetReportAction(dynamic reportData)
+        {
+            var actionString = (string)reportData.Action;
+            var isActionEnum = Enum.TryParse(actionString, out ReportAction action);
+            if (isActionEnum) { return action; }
+
+            WarningPopup("Cannot detect report action. Assuming report action as preview.");
+            return ReportAction.Preview;
         }
 
         private bool ExtensionMatchedWithTemplateName
