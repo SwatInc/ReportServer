@@ -79,7 +79,7 @@ namespace ReportServer.Views
                 _reportExportBasepath = data?.ReportExportBasePath;
                 InfoPopup($"Report export base path: {_reportExportBasepath}");
             }
-            catch(SqlException)
+            catch (SqlException)
             {
                 ExceptionPopup("Cannot access database [SqlException].\n" +
                     "To enable report export, please restart ReportServer after database access is restored.");
@@ -175,33 +175,45 @@ namespace ReportServer.Views
         private void PrintReport(string jsonReportData)
         {
             if (_loadedExtensions.Count == 0) { return; }
+            dynamic reportData = JsonConvert.DeserializeObject(jsonReportData);
+            var templateFound = false;
 
-            foreach (var extension in _loadedExtensions)
+            foreach (var template in GetTemplateNames(reportData.TemplateName.ToString()))
             {
-                dynamic reportData = JsonConvert.DeserializeObject(jsonReportData);
-                var reportAction = GetReportAction(reportData);
-                if (ExtensionMatchedWithTemplateName
-                    (extension.ReportName, reportData.TemplateName.ToString()))
+
+                foreach (var extension in _loadedExtensions)
                 {
-                    if (string.IsNullOrEmpty((string)reportData.EpisodeNumber) == false)
+                    var reportAction = GetReportAction(reportData);
+
+                    if (ExtensionMatchedWithTemplateName
+                        (extension.ReportName, template))
                     {
-                        extension.Print(jsonReportData, "", ReportMode.Episode, reportAction);
-                    }
-                    else if (string.IsNullOrEmpty((string)reportData.Sid) == false)
-                    {
-                        extension.Print(jsonReportData, "", ReportMode.Sample, reportAction);
-                    }
-                    else
-                    {
-                        WarningPopup("Cannot detect an episode number or sample number to " +
-                            "generate the report. Request ignored!");
+                        templateFound = true;
+
+                        if (string.IsNullOrEmpty((string)reportData.EpisodeNumber) == false)
+                        {
+                            extension.Print(jsonReportData, "", ReportMode.Episode, reportAction);
+                        }
+                        else if (string.IsNullOrEmpty((string)reportData.Sid) == false)
+                        {
+                            extension.Print(jsonReportData, "", ReportMode.Sample, reportAction);
+                        }
+                        else
+                        {
+                            WarningPopup("Cannot detect an episode number or sample number to " +
+                                "generate the report. Request ignored!");
+                        }
+
                     }
 
                 }
-                else
-                {
-                    ExceptionPopup($"Cannot find the plugin for report template [ {reportData.TemplateName.ToString()} ] specified.");
-                }
+
+            }
+
+
+            if (!templateFound)
+            {
+                ExceptionPopup($"Cannot find the plugin for report template [ {reportData.TemplateName.ToString()} ] specified.");
             }
 
         }
@@ -219,11 +231,17 @@ namespace ReportServer.Views
         private bool ExtensionMatchedWithTemplateName
             (string extensionReportName, string templateName)
         {
-            foreach (var template in templateName.Split(','))
+            foreach (var template in GetTemplateNames(templateName))
             {
+                Console.WriteLine("looking for template: " + template);
                 return extensionReportName == template.Trim();
             }
             return false;
+        }
+
+        private string[] GetTemplateNames(string csvTemplateName)
+        {
+            return csvTemplateName.Split(',');
         }
 
         private void InitializeExtensions()

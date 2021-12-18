@@ -27,12 +27,12 @@ namespace CD4.ReportTemplate.MedlabClinical
 
         public ClinicalTemplate()
         {
-            ReportName = "Medlab.ClinicalTemplate";
-            GetReportData += OnGetReportData;
+            ReportName = "Medlab.Clinical.AnalysisReport";
+            GetReportData += OnGetReportDataAsync;
 
         }
 
-        private async void OnGetReportData(object sender, ReportQueryParameters e)
+        private async void OnGetReportDataAsync(object sender, ReportQueryParameters e)
         {
             try
             {

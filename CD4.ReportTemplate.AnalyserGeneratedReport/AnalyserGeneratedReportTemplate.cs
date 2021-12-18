@@ -15,6 +15,9 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
     public class AnalyserGeneratedReportTemplate : IExtensibility
     {
         private string _printerName { get; set; }
+        private ReportMode _reportMode;
+        private ReportAction _reportAction;
+
         private event EventHandler<ReportQueryParameters> GetReportData;
         public event EventHandler<ReportServerNotificationModel> OnPopupMessageRequired;
         public event EventHandler<XtraReport> OnReportExportRequest;
@@ -32,12 +35,47 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
             try
             {
                 var reportDataAccess = new ReportsDataAccess();
-                var data = await reportDataAccess.GetAnalysisReportByCinAsync(e.EpisodeNumber, 1);
+                List<DataLibrary.Models.ReportModels.AnalysisRequestReportModel> data;
+                switch (_reportMode)
+                {
+                    case ReportMode.Sample:
+                        data = await reportDataAccess.GetAnalysisReportByCinAsync(e.Sid, 1);
+
+                        break;
+                    case ReportMode.Episode:
+                        data = await reportDataAccess.GetAnalysisReportForEpisodeAsync(e.EpisodeNumber, 1);
+                        break;
+                    default:
+                        data = null;
+                        break;
+                }
+
                 if (data is null) { throw new Exception("No results for printing."); }
                 if (data.Count == 0) { throw new Exception("No results for printing."); }
 
                 var mappedData = MapReportData(data);
-                ExecuteReportPrint(mappedData);
+
+                switch (_reportAction)
+                {
+                    case ReportAction.Print:
+                        OnPopupMessageRequired?.Invoke(this, new ReportServerNotificationModel
+                        { Message = $"Printing report {data[0].Assays[0].Cin}", NotifyIcon = System.Windows.Forms.ToolTipIcon.Info });
+                        ExecuteReportPrint(mappedData);
+                        break;
+
+                    case ReportAction.Preview:
+                        OnReportPreviewRequest?.Invoke(this, new Report.AnalyserGeneratedReport() { DataSource = mappedData });
+                        break;
+                    case ReportAction.Export:
+                        OnReportExportRequest?.Invoke(this, new Report.AnalyserGeneratedReport() { DataSource = mappedData });
+                        break;
+
+                    default:
+                        OnPopupMessageRequired?.Invoke(this, new ReportServerNotificationModel
+                        { Message = "Report action not specified. Actions: print, preview, export.", NotifyIcon = System.Windows.Forms.ToolTipIcon.Error });
+                        break;
+                }
+
             }
             catch (Exception ex)
             {
@@ -151,6 +189,8 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
         {
             if (string.IsNullOrEmpty(jsonData)) { throw new ArgumentException("No data or parameters passed in for report generation."); }
             _printerName = string.IsNullOrEmpty(printerName) == false ? printerName : null;
+            _reportMode = reportMode;
+            _reportAction = reportAction;
 
             try
             {
