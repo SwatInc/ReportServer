@@ -7,6 +7,7 @@ using ReportServer.Extensibility.Models;
 using ReportServer.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -23,6 +24,7 @@ namespace ReportServer.Views
         private ApplicationSettings _settings { get; set; }
         private bool _isMonitoringIncoming { get; set; }
         private string _reportExportBasepath;
+        private BindingList<XtraReport> _listOfReports;
         private const int CP_NOCLOSE_BUTTON = 0x200;
 
 
@@ -34,6 +36,7 @@ namespace ReportServer.Views
         public MainView()
         {
             InitializeComponent();
+            _listOfReports = new BindingList<XtraReport>();
             InitializeSettings();
             InitializeExtensions();
             _previewReportDelegate = new PreviewReport(PreviewReportDelegateHandler);
