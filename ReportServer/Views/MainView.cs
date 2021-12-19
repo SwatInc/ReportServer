@@ -21,7 +21,7 @@ namespace ReportServer.Views
     {
         private List<IExtensibility> _loadedExtensions;
         private ApplicationSettings _settings { get; set; }
-        private bool IsMonitoringIncoming { get; set; }
+        private bool _isMonitoringIncoming { get; set; }
         private string _reportExportBasepath;
         private const int CP_NOCLOSE_BUTTON = 0x200;
 
@@ -44,7 +44,7 @@ namespace ReportServer.Views
 
             toolStripMenuItemExit.Click += ToolStripMenuItemExit_Click;
             FormClosing += MainView_FormClosing;
-            IsMonitoringIncoming = true;
+            _isMonitoringIncoming = true;
             InitializeMonitoring?.Invoke(this, EventArgs.Empty);
 
             ShowInitializeCompletedPopup();
@@ -92,7 +92,7 @@ namespace ReportServer.Views
 
         private void MainView_FormClosing(object sender, FormClosingEventArgs e)
         {
-            IsMonitoringIncoming = false;
+            _isMonitoringIncoming = false;
             notifyIcon.Visible = false;
         }
 
@@ -115,7 +115,7 @@ namespace ReportServer.Views
             await Task.Run(() =>
             {
 
-                while (IsMonitoringIncoming)
+                while (_isMonitoringIncoming)
                 {
                     try
                     {
@@ -372,7 +372,7 @@ namespace ReportServer.Views
         private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
         {
             ShowApplicationExitPopUp();
-            IsMonitoringIncoming = false;
+            _isMonitoringIncoming = false;
             notifyIcon.Visible = false;
             Environment.Exit(0);
             Close();
