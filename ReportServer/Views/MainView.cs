@@ -65,22 +65,6 @@ namespace ReportServer.Views
         {
             try
             {
-                #region Report Print Dialog [Ctrl+Shift+P]
-                if (e.Control && e.Shift && e.KeyCode == Keys.P)
-                {
-                    ReportPrintTool printTool = new ReportPrintTool((XtraReport)documentViewer.DocumentSource);
-                    printTool.PrintDialog();
-                }
-                #endregion
-
-                #region Report Print
-                if (e.Control && e.KeyCode == Keys.P)
-                {
-                    ReportPrintTool printTool = new ReportPrintTool((XtraReport)documentViewer.DocumentSource);
-                    printTool.Print();
-                }
-                #endregion
-
                 #region Hide to system tray
                 if (e.KeyCode == Keys.Escape)
                 {
