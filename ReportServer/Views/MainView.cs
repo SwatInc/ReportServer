@@ -109,16 +109,6 @@ namespace ReportServer.Views
             SuspendLayout();
             #endregion
 
-            //var page1 = new TabNavigationPage() { Caption = "Page1" };
-            //var page2 = new TabNavigationPage() { Caption = "Page2" };
-
-
-            //_tabPane.Controls.Add(page1);
-            //_tabPane.Controls.Add(page2);
-
-
-            //_tabPane.Pages.AddRange(new NavigationPageBase[] { page1, page2 });
-
             Controls.Add(_tabPane);
 
             #region Complete layout init
