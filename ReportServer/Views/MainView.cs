@@ -1,5 +1,6 @@
 ﻿using CD4.DataLibrary.DataAccess;
 using DevExpress.Skins;
+using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraReports.UI;
 using Newtonsoft.Json;
 using ReportServer.Extensibility.Interfaces;
@@ -25,6 +26,7 @@ namespace ReportServer.Views
         private bool _isMonitoringIncoming { get; set; }
         private string _reportExportBasepath;
         private BindingList<XtraReport> _listOfReports;
+        private TabPane _tabPane;
         private const int CP_NOCLOSE_BUTTON = 0x200;
 
 
@@ -36,6 +38,7 @@ namespace ReportServer.Views
         public MainView()
         {
             InitializeComponent();
+            InitializeTabPane();
             _listOfReports = new BindingList<XtraReport>();
             InitializeSettings();
             InitializeExtensions();
@@ -44,6 +47,7 @@ namespace ReportServer.Views
             InitializeDataLib();
             DetectedReportDataFile += OnDetectedReportDataFile;
             InitializeMonitoring += OnInitializeMonitoringAsync;
+            _listOfReports.ListChanged += _listOfReports_ListChanged;
 
             toolStripMenuItemExit.Click += ToolStripMenuItemExit_Click;
             FormClosing += MainView_FormClosing;
@@ -55,6 +59,74 @@ namespace ReportServer.Views
 
         }
 
+        private void _listOfReports_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemAdded)
+            {
+                //TabPaneRemoveAllPages();
+                AddTabPanePagesForReports(e.NewIndex);
+            }
+        }
+
+        /// <summary>
+        /// Adds Tab pages to tab pane
+        /// </summary>
+        /// <param name="startIndex">This is the index of the newly added report. 
+        /// loop will start addeding from this index to avoid dublicate tab panes</param>
+        private void AddTabPanePagesForReports(int startIndex)
+        {
+            var tabsNo = _listOfReports.Count;
+            var pages = new List<TabNavigationPage>();
+
+            _tabPane.SuspendLayout();
+
+            for (int i = startIndex; i <= tabsNo-1; i++)
+            {
+                var page = new TabNavigationPage() { Caption = $"Report [ {i+1} ]" };
+                pages.Add(page);
+                _tabPane.Controls.Add(page);
+            }
+
+            _tabPane.Pages.AddRange(pages);
+            _tabPane.ResumeLayout();
+
+        }
+
+        private void TabPaneRemoveAllPages()
+        {
+            _tabPane.SuspendLayout();
+            _tabPane.Pages.Clear();
+            _tabPane.Controls.Clear();
+            _tabPane.ResumeLayout();
+        }
+
+        private void InitializeTabPane()
+        {
+            _tabPane = new TabPane { Dock = DockStyle.Fill };
+
+            #region Prepare to init layout
+            _tabPane.SuspendLayout();
+            SuspendLayout();
+            #endregion
+
+            //var page1 = new TabNavigationPage() { Caption = "Page1" };
+            //var page2 = new TabNavigationPage() { Caption = "Page2" };
+
+
+            //_tabPane.Controls.Add(page1);
+            //_tabPane.Controls.Add(page2);
+
+
+            //_tabPane.Pages.AddRange(new NavigationPageBase[] { page1, page2 });
+
+            Controls.Add(_tabPane);
+
+            #region Complete layout init
+            _tabPane.ResumeLayout(false);
+            ResumeLayout(false);
+            #endregion
+        }
+
         private void MainView_Resize(object sender, EventArgs e)
         {
             switch (WindowState)
@@ -63,6 +135,9 @@ namespace ReportServer.Views
                     break;
                 case FormWindowState.Minimized:
                     Hide(); // this required to hide the window from TAB key when minimized.
+                    _listOfReports.Clear();
+                    TabPaneRemoveAllPages();
+
                     break;
                 case FormWindowState.Maximized:
                     break;
@@ -302,6 +377,8 @@ namespace ReportServer.Views
 
         private void PreviewReportDelegateHandler(XtraReport report)
         {
+            _listOfReports.Add(report);
+
             documentViewer.DocumentSource = report;
             documentViewer.InitiateDocumentCreation();
             WindowState = FormWindowState.Maximized;
