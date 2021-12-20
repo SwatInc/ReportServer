@@ -51,6 +51,24 @@ namespace ReportServer.Views
             InitializeMonitoring?.Invoke(this, EventArgs.Empty);
 
             ShowInitializeCompletedPopup();
+            Resize += MainView_Resize;
+
+        }
+
+        private void MainView_Resize(object sender, EventArgs e)
+        {
+            switch (WindowState)
+            {
+                case FormWindowState.Normal:
+                    break;
+                case FormWindowState.Minimized:
+                    Hide(); // this required to hide the window from TAB key when minimized.
+                    break;
+                case FormWindowState.Maximized:
+                    break;
+                default:
+                    break;
+            }
         }
 
         protected override CreateParams CreateParams
@@ -287,7 +305,8 @@ namespace ReportServer.Views
             documentViewer.DocumentSource = report;
             documentViewer.InitiateDocumentCreation();
             WindowState = FormWindowState.Maximized;
-            Activate();
+            Show(); //shows the window
+            Activate(); //brings the window to TOP
         }
 
         private void Instance_OnReportExportRequest(object sender, XtraReport e)
