@@ -70,7 +70,6 @@ namespace ReportServer.Views
             this.documentViewer.Name = "documentViewer";
             this.documentViewer.Size = new System.Drawing.Size(863, 438);
             this.documentViewer.TabIndex = 1;
-            this.documentViewer.Visible = false;
             // 
             // MainView
             // 

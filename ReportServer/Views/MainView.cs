@@ -48,6 +48,7 @@ namespace ReportServer.Views
             DetectedReportDataFile += OnDetectedReportDataFile;
             InitializeMonitoring += OnInitializeMonitoringAsync;
             _listOfReports.ListChanged += _listOfReports_ListChanged;
+            _tabPane.SelectedPageChanged += TabPane_SelectedPageChangedAssignDocument;
 
             toolStripMenuItemExit.Click += ToolStripMenuItemExit_Click;
             FormClosing += MainView_FormClosing;
@@ -57,6 +58,20 @@ namespace ReportServer.Views
             ShowInitializeCompletedPopup();
             Resize += MainView_Resize;
 
+        }
+
+        private void TabPane_SelectedPageChangedAssignDocument
+            (object sender, SelectedPageChangedEventArgs e)
+        {
+            _tabPane.SuspendLayout();
+            if (_tabPane.SelectedPageIndex != -1)
+            {
+                documentViewer.DocumentSource = _listOfReports[_tabPane.SelectedPageIndex];
+                documentViewer.InitiateDocumentCreation();
+                _tabPane.SelectedPage.Controls.Add(documentViewer);
+            }
+
+            _tabPane.ResumeLayout();
         }
 
         private void _listOfReports_ListChanged(object sender, ListChangedEventArgs e)
@@ -80,14 +95,16 @@ namespace ReportServer.Views
 
             _tabPane.SuspendLayout();
 
-            for (int i = startIndex; i <= tabsNo-1; i++)
+            for (int i = startIndex; i <= tabsNo - 1; i++)
             {
-                var page = new TabNavigationPage() { Caption = $"Report [ {i+1} ]" };
+                var page = new TabNavigationPage() { Caption = $"Report [ {i + 1} ]" };
+                page.Controls.Add(documentViewer);
                 pages.Add(page);
                 _tabPane.Controls.Add(page);
             }
 
             _tabPane.Pages.AddRange(pages);
+            _tabPane.SelectedPage = pages.LastOrDefault();
             _tabPane.ResumeLayout();
 
         }
@@ -378,8 +395,8 @@ namespace ReportServer.Views
 
         private void Instance_OnReportExportRequest(object sender, XtraReport e)
         {
-            try 
-            { 
+            try
+            {
                 ValidateReportBasePath();
                 if (string.IsNullOrEmpty(e.DisplayName))
                 {
