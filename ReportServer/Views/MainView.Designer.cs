@@ -78,6 +78,7 @@ namespace ReportServer.Views
             this.ClientSize = new System.Drawing.Size(863, 438);
             this.Controls.Add(this.documentViewer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "MainView";
             this.ShowInTaskbar = false;

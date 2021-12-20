@@ -57,6 +57,42 @@ namespace ReportServer.Views
 
             ShowInitializeCompletedPopup();
             Resize += MainView_Resize;
+            KeyDown += MainView_KeyDown;
+
+        }
+
+        private void MainView_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                #region Report Print Dialog [Ctrl+Shift+P]
+                if (e.Control && e.Shift && e.KeyCode == Keys.P)
+                {
+                    ReportPrintTool printTool = new ReportPrintTool((XtraReport)documentViewer.DocumentSource);
+                    printTool.PrintDialog();
+                }
+                #endregion
+
+                #region Report Print
+                if (e.Control && e.KeyCode == Keys.P)
+                {
+                    ReportPrintTool printTool = new ReportPrintTool((XtraReport)documentViewer.DocumentSource);
+                    printTool.Print();
+                }
+                #endregion
+
+                #region Hide to system tray
+                if (e.KeyCode == Keys.Escape)
+                {
+                    WindowState = FormWindowState.Minimized;
+                }
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                ExceptionPopup(ex);
+            }
+
 
         }
 
