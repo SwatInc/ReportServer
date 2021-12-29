@@ -17,6 +17,7 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
         private string _printerName { get; set; }
         private ReportMode _reportMode;
         private ReportAction _reportAction;
+        private const int _reportTemplateId = 1;
 
         private event EventHandler<ReportQueryParameters> GetReportData;
         public event EventHandler<ReportServerNotificationModel> OnPopupMessageRequired;
@@ -39,11 +40,11 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
                 switch (_reportMode)
                 {
                     case ReportMode.Sample:
-                        data = await reportDataAccess.GetAnalysisReportByCinAsync(e.Sid, 1);
+                        data = await reportDataAccess.GetAnalysisReportByCinAsync(e.Sid, 1,_reportTemplateId);
 
                         break;
                     case ReportMode.Episode:
-                        data = await reportDataAccess.GetAnalysisReportForEpisodeAsync(e.EpisodeNumber, 1);
+                        data = await reportDataAccess.GetAnalysisReportForEpisodeAsync(e.EpisodeNumber, 1, _reportTemplateId);
                         break;
                     default:
                         data = null;
