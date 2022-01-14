@@ -36,5 +36,17 @@ namespace ReportServer.Properties {
                 this["AppSettingsJson"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"""[{\""ReportName\"":\""Medlab.Clinical.AnalysisReport\"",\""ReportDatabaseId\"":0},{\""ReportName\"":\""Medlab.DoATemplateOne\"",\""ReportDatabaseId\"":0},{\""ReportName\"":\""Medlab.DoATemplate\"",\""ReportDatabaseId\"":0},{\""ReportName\"":\""Medlab.AnalyserGeneratedReport\"",\""ReportDatabaseId\"":0}]""")]
+        public string ReportConfig {
+            get {
+                return ((string)(this["ReportConfig"]));
+            }
+            set {
+                this["ReportConfig"] = value;
+            }
+        }
     }
 }

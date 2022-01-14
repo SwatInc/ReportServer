@@ -23,6 +23,7 @@ namespace ReportServer.Views
     {
         private List<IExtensibility> _loadedExtensions;
         private ApplicationSettings _settings { get; set; }
+        private List<ReportConfigModel> _reportConfig { get; set; }
         private bool _isMonitoringIncoming { get; set; }
         private string _reportExportBasepath;
         private BindingList<XtraReport> _listOfReports;
@@ -41,6 +42,7 @@ namespace ReportServer.Views
             InitializeTabPane();
             _listOfReports = new BindingList<XtraReport>();
             InitializeSettings();
+            InitializeReportConfig();
             InitializeExtensions();
             _previewReportDelegate = new PreviewReport(PreviewReportDelegateHandler);
 
@@ -58,6 +60,22 @@ namespace ReportServer.Views
             ShowInitializeCompletedPopup();
             Resize += MainView_Resize;
             KeyDown += MainView_KeyDown;
+
+        }
+
+        private void InitializeReportConfig()
+        {
+            try
+            {
+                _reportConfig = new List<ReportConfigModel>();
+                var reportSettingsJson = Properties.Settings.Default.ReportConfig;
+                var reportSettings = JsonConvert.DeserializeObject<List<ReportConfigModel>>(reportSettingsJson);
+                _reportConfig.AddRange(reportSettings);
+            }
+            catch (Exception ex)
+            {
+                ExceptionPopup(ex);
+            }
 
         }
 
@@ -372,6 +390,7 @@ namespace ReportServer.Views
             _loadedExtensions = new List<IExtensibility>();
             try
             {
+                //
                 List<Assembly> allAssemblies = new List<Assembly>();
                 string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -386,6 +405,9 @@ namespace ReportServer.Views
                         instance.OnPopupMessageRequired += Instance_OnPopupMessageRequired;
                         instance.OnReportExportRequest += Instance_OnReportExportRequest;
                         instance.OnReportPreviewRequest += Instance_OnReportPreviewRequest;
+
+                        var reportId = GetReportIdByNameFromConfig(instance.ReportName);
+                        instance.SetReportId(reportId);
                         _loadedExtensions.Add(instance);
                     }
                 }
@@ -395,6 +417,26 @@ namespace ReportServer.Views
                 ExceptionPopup(ex);
             }
 
+        }
+
+        private int GetReportIdByNameFromConfig(string reportName)
+        {
+            if(_reportConfig is null || _reportConfig?.Count <= 0)
+            {
+                ExceptionPopup("Report configuration does not exist.");
+                return 0;
+            }
+
+            foreach (var item in _reportConfig)
+            {
+                if (item.ReportName == reportName)
+                {
+                    return item.Id;
+                }
+            }
+
+            ExceptionPopup($"Cannot find [ReportId] for report template: [{reportName}]");
+            return 0;
         }
 
         private void Instance_OnReportPreviewRequest(object sender, XtraReport e)

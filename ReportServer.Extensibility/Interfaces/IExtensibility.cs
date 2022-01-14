@@ -12,6 +12,7 @@ namespace ReportServer.Extensibility.Interfaces
 
         string ReportName { get;}
         Type GetModelType();
+        void SetReportId(int reportId);
         void Print(string jsonData, string printerName, ReportMode reportMode, ReportAction reportAction = ReportAction.Print);
     }
 }

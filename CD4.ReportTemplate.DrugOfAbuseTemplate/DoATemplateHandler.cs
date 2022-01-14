@@ -16,7 +16,7 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplate
         private string _printerName;
         private ReportMode _reportMode;
         private ReportAction _reportAction;
-        private const int _reportTemplateId = 1;
+        private int _reportTemplateId;
 
         private event EventHandler<ReportQueryParameters> GetReportData;
         public event EventHandler<ReportServerNotificationModel> OnPopupMessageRequired;
@@ -29,6 +29,15 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplate
         {
             ReportName = "Medlab.DoATemplate";
             GetReportData += OnGetReportDataAsync;
+        }
+        /// <summary>
+        /// This is Id the report uses to query only the data required for the report excluding data for other templates.
+        /// This is the PK Id for the report on database
+        /// </summary>
+        /// <param name="reportId">This is the PK Id (int) for the report on database</param>
+        public void SetReportId(int reportId)
+        {
+            _reportTemplateId = reportId;
         }
 
         private async void OnGetReportDataAsync(object sender, ReportQueryParameters e)
