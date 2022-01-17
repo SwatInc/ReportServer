@@ -8,6 +8,7 @@ using ReportServer.Extensibility.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace CD4.ReportTemplate.MedlabClinical
 {
@@ -52,11 +53,11 @@ namespace CD4.ReportTemplate.MedlabClinical
                 switch (_reportMode)
                 {
                     case ReportMode.Sample:
-                         data = await reportDataAccess.GetAnalysisReportByCinAsync(e.Sid, 1, _reportTemplateId);
+                        data = await reportDataAccess.GetAnalysisReportByCinAsync(e.Sid, 1, _reportTemplateId);
 
                         break;
                     case ReportMode.Episode:
-                        data  = await reportDataAccess.GetAnalysisReportForEpisodeAsync(e.EpisodeNumber,1, _reportTemplateId);
+                        data = await reportDataAccess.GetAnalysisReportForEpisodeAsync(e.EpisodeNumber, 1, _reportTemplateId);
                         break;
                     default:
                         data = null;
@@ -80,7 +81,14 @@ namespace CD4.ReportTemplate.MedlabClinical
                         OnReportPreviewRequest?.Invoke(this, new Report.AnalysisReport() { DataSource = mappedData });
                         break;
                     case ReportAction.Export:
-                        OnReportExportRequest?.Invoke(this, new Report.AnalysisReport() { DataSource = mappedData });
+                        var reportExportData = GetReportExportData(mappedData);
+                        OnReportExportRequest?.Invoke(this, new Report.AnalysisReport() 
+                        {
+                            DataSource = mappedData,
+                            DisplayName = $"{reportExportData.EpisodeNumber}_{reportExportData.PatientName}({reportExportData.Nidpp})",
+                            Tag = reportExportData 
+                        });
+
                         break;
 
                     default:
@@ -94,6 +102,29 @@ namespace CD4.ReportTemplate.MedlabClinical
             {
                 ShowError(ex);
             }
+        }
+
+        private ReportExportDataModel GetReportExportData
+            (List<Entensibility.ReportingFramework.Models.AnalysisRequestReportModel> mappedData)
+        {
+            try
+            {
+                //basepath\yyyy\Month\day\Site\memoNo_name(nidPp).pdf
+                var firstRecord = mappedData.FirstOrDefault();
+                return new ReportExportDataModel()
+                {
+                    SampledSite = firstRecord.SampleSite,
+                    Nidpp = firstRecord.Patient.NidPp,
+                    EpisodeNumber = firstRecord.EpisodeNumber,
+                    PatientName = firstRecord.Patient.Fullname
+                };
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+                return new ReportExportDataModel();
+            }
+
         }
 
         private void ExecuteReportPrint
