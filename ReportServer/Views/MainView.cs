@@ -459,17 +459,65 @@ namespace ReportServer.Views
         {
             try
             {
+                var reportExportData = GetReportExportData(e);
+
                 ValidateReportBasePath();
                 if (string.IsNullOrEmpty(e.DisplayName))
                 {
                     e.DisplayName = $"Report_{Guid.NewGuid()}.pdf";
                 }
 
-                e.ExportToPdf($"{_reportExportBasepath}{e.DisplayName}");
+                string exportDirectoryStructure = $"{DateTime.Today:yyyy}\\{DateTime.Today:MMMM}\\{DateTime.Today:dd}\\{reportExportData.SampledSite.Trim()}";
+                var exportDirPath = $"{_reportExportBasepath}\\{exportDirectoryStructure}";
+                CreateDirectoryIfNotExists(exportDirPath);
+
+                e.DisplayName = RemoveInvalidCharactersForExport(e.DisplayName);
+
+                e.ExportToPdf($"{exportDirPath}\\{e.DisplayName}.pdf");
             }
             catch (Exception ex)
             {
                 ExceptionPopup(ex);
+            }
+        }
+
+        private void CreateDirectoryIfNotExists(string directoryPath)
+        {
+            // If directory does not exist, create it
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+        }
+
+        /// <summary>
+        /// Replaces invalid characters for a windows file name
+        /// </summary>
+        /// <returns></returns>
+        private string RemoveInvalidCharactersForExport(string value)
+        {
+            return value
+                .Replace('\\', '-')
+                .Replace('/', '-')
+                .Replace('(', '-')
+                .Replace(')', '-')
+                .Replace("C|", "")
+                .Replace("E|", "");
+        }
+
+        /// <summary>
+        /// The Tag of the xtrareport should have an instance of ReportExportModel assigned with data
+        /// </summary>
+        private ReportExportDataModel GetReportExportData(XtraReport e)
+        {
+            try
+            {
+                return (ReportExportDataModel)e.Tag;
+            }
+            catch (Exception ex)
+            {
+                ExceptionPopup(ex);
+                return new ReportExportDataModel();
             }
         }
 

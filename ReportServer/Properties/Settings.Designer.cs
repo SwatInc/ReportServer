@@ -12,7 +12,7 @@ namespace ReportServer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -39,7 +39,7 @@ namespace ReportServer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"[{""ReportName"":""Medlab.Clinical.AnalysisReport"",""ReportDatabaseId"":0},{""ReportName"":""Medlab.DoATemplateOne"",""ReportDatabaseId"":0},{""ReportName"":""Medlab.DoATemplate"",""ReportDatabaseId"":0},{""ReportName"":""Medlab.AnalyserGeneratedReport"",""ReportDatabaseId"":0}]")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"[{""ReportName"":""Medlab.Clinical.AnalysisReport"",""ReportDatabaseId"":1},{""ReportName"":""Medlab.DoATemplateOne"",""ReportDatabaseId"":2},{""ReportName"":""Medlab.DoATemplate"",""ReportDatabaseId"":0},{""ReportName"":""Medlab.AnalyserGeneratedReportOne"",""ReportDatabaseId"":2}]")]
         public string ReportConfig {
             get {
                 return ((string)(this["ReportConfig"]));
