@@ -795,7 +795,7 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplateOne.Report
             // 
             this.xrTableCell53.BorderColor = System.Drawing.Color.Gray;
             this.xrTableCell53.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Benzodiazepines-1]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Benzodiazepine1]")});
             this.xrTableCell53.Font = new System.Drawing.Font("Faruma", 10F);
             this.xrTableCell53.Multiline = true;
             this.xrTableCell53.Name = "xrTableCell53";
@@ -870,7 +870,7 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplateOne.Report
             // 
             this.xrTableCell57.BorderColor = System.Drawing.Color.Gray;
             this.xrTableCell57.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Benzodiazepine-2]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Benzodiazepine2]")});
             this.xrTableCell57.Font = new System.Drawing.Font("Faruma", 10F);
             this.xrTableCell57.Multiline = true;
             this.xrTableCell57.Name = "xrTableCell57";
@@ -1201,7 +1201,7 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplateOne.Report
             this.xrTableCell38.StylePriority.UseFont = false;
             this.xrTableCell38.StylePriority.UsePadding = false;
             this.xrTableCell38.StylePriority.UseTextAlignment = false;
-            this.xrTableCell38.Text = "މެތަޑޯން (Methadone";
+            this.xrTableCell38.Text = "މެތަޑޯން (Methadone)";
             this.xrTableCell38.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
             this.xrTableCell38.Weight = 1.5858873411419505D;
             // 
