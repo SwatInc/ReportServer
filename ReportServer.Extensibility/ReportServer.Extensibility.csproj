@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ReportServer.Extensibility</RootNamespace>
     <AssemblyName>ReportServer.Extensibility</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IExtensibility.cs" />
+    <Compile Include="Models\ReportExportData.cs" />
     <Compile Include="Models\ReportMode.cs" />
     <Compile Include="Models\ReportServerNotificationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
