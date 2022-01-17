@@ -77,7 +77,13 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplate
                         OnReportPreviewRequest?.Invoke(this, new Report.AnalysisReportDoA() { DataSource = mappedData });
                         break;
                     case ReportAction.Export:
-                        OnReportExportRequest?.Invoke(this, new Report.AnalysisReportDoA() { DataSource = mappedData });
+                        var reportExportData = GetReportExportData(mappedData);
+                        OnReportExportRequest?.Invoke(this, new Report.AnalysisReportDoA()
+                        {
+                            DataSource = mappedData,
+                            DisplayName = $"{reportExportData.EpisodeNumber}_{reportExportData.PatientName}({reportExportData.Nidpp})",
+                            Tag = reportExportData
+                        });
                         break;
 
                     default:
@@ -92,6 +98,27 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplate
                 ShowError(ex);
             }
         }
+        private ReportExportDataModel GetReportExportData(List<DoAAnalysisRequestReportModel> mappedData)
+        {
+            try
+            {
+                //basepath\yyyy\Month\day\Site\memoNo_name(nidPp).pdf
+                var firstRecord = mappedData.FirstOrDefault();
+                return new ReportExportDataModel()
+                {
+                    SampledSite = firstRecord.SampleSite,
+                    Nidpp = firstRecord.Patient.NidPp,
+                    EpisodeNumber = firstRecord.EpisodeNumber,
+                    PatientName = firstRecord.Patient.Fullname
+                };
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+                return new ReportExportDataModel();
+            }
+        }
+
 
         private void ShowError(Exception ex)
         {

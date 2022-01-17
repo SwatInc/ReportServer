@@ -12,7 +12,7 @@
 }</Value>
     </Setting>
     <Setting Name="ReportConfig" Type="System.String" Scope="User">
-      <Value Profile="(Default)">"[{\"ReportName\":\"Medlab.Clinical.AnalysisReport\",\"ReportDatabaseId\":0},{\"ReportName\":\"Medlab.DoATemplateOne\",\"ReportDatabaseId\":0},{\"ReportName\":\"Medlab.DoATemplate\",\"ReportDatabaseId\":0},{\"ReportName\":\"Medlab.AnalyserGeneratedReport\",\"ReportDatabaseId\":0}]"</Value>
+      <Value Profile="(Default)">[{"ReportName":"Medlab.Clinical.AnalysisReport","ReportDatabaseId":0},{"ReportName":"Medlab.DoATemplateOne","ReportDatabaseId":0},{"ReportName":"Medlab.DoATemplate","ReportDatabaseId":0},{"ReportName":"Medlab.AnalyserGeneratedReport","ReportDatabaseId":0}]</Value>
     </Setting>
   </Settings>
 </SettingsFile>

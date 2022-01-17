@@ -28,7 +28,7 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
 
         public AnalyserGeneratedReportTemplate()
         {
-            ReportName = "Medlab.AnalyserGeneratedReport";
+            ReportName = "Medlab.AnalyserGeneratedReportOne";
             GetReportData += OnGetReportData;
         }
         /// <summary>
@@ -78,7 +78,13 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
                         OnReportPreviewRequest?.Invoke(this, new Report.AnalyserGeneratedReport() { DataSource = mappedData });
                         break;
                     case ReportAction.Export:
-                        OnReportExportRequest?.Invoke(this, new Report.AnalyserGeneratedReport() { DataSource = mappedData });
+                        var reportExportData = GetReportExportData(mappedData);
+                        OnReportExportRequest?.Invoke(this, new Report.AnalyserGeneratedReport()
+                        {
+                            DataSource = mappedData,
+                            DisplayName = $"{reportExportData.EpisodeNumber}_{reportExportData.PatientName}({reportExportData.Nidpp})",
+                            Tag = reportExportData
+                        });
                         break;
 
                     default:
@@ -91,6 +97,27 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
             catch (Exception ex)
             {
                 ShowError(ex);
+            }
+        }
+
+        private ReportExportDataModel GetReportExportData(List<AnalysisRequestReportModel> mappedData)
+        {
+            try
+            {
+                //basepath\yyyy\Month\day\Site\memoNo_name(nidPp).pdf
+                var firstRecord = mappedData.FirstOrDefault();
+                return new ReportExportDataModel()
+                {
+                    SampledSite = firstRecord.SampleSite,
+                    Nidpp = firstRecord.Patient.NidPp,
+                    EpisodeNumber = firstRecord.EpisodeNumber,
+                    PatientName = firstRecord.Patient.Fullname
+                };
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+                return new ReportExportDataModel();
             }
         }
 
