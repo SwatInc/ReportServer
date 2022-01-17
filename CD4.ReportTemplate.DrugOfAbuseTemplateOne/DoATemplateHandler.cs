@@ -77,7 +77,13 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplateOne
                         OnReportPreviewRequest?.Invoke(this, new Report.AnalysisReportDoAOne() { DataSource = mappedData });
                         break;
                     case ReportAction.Export:
-                        OnReportExportRequest?.Invoke(this, new Report.AnalysisReportDoAOne() { DataSource = mappedData });
+                        var reportExportData = GetReportExportData(mappedData);
+                        OnReportExportRequest?.Invoke(this, new Report.AnalysisReportDoAOne()
+                        {
+                            DataSource = mappedData,
+                            DisplayName = $"{reportExportData.EpisodeNumber}_{reportExportData.PatientName}({reportExportData.Nidpp})",
+                            Tag = reportExportData
+                        });
                         break;
 
                     default:
@@ -90,6 +96,27 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplateOne
             catch (Exception ex)
             {
                 ShowError(ex);
+            }
+        }
+
+        private ReportExportDataModel GetReportExportData(List<DoAAnalysisRequestReportModel> mappedData)
+        {
+            try
+            {
+                //basepath\yyyy\Month\day\Site\memoNo_name(nidPp).pdf
+                var firstRecord = mappedData.FirstOrDefault();
+                return new ReportExportDataModel()
+                {
+                    SampledSite = firstRecord.SampleSite,
+                    Nidpp = firstRecord.Patient.NidPp,
+                    EpisodeNumber = firstRecord.EpisodeNumber,
+                    PatientName = firstRecord.Patient.Fullname
+                };
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+                return new ReportExportDataModel();
             }
         }
 
@@ -153,8 +180,8 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplateOne
 
             doaModel.Methadone = analysis.FirstOrDefault((x) => x.Assay.ToLower().Contains("methadone") && x.Assay.EndsWith("_I"))?.Result;
             doaModel.Amphetamine = analysis.FirstOrDefault((x) => x.Assay.ToLower().Contains("amphetamine") && x.Assay.EndsWith("_I"))?.Result;
-            doaModel.Benzodiazepine1 = analysis.FirstOrDefault((x) => x.Assay.ToLower().Contains("benzodiazepines-1") && x.Assay.EndsWith("_I"))?.Result;
-            doaModel.Benzodiazepine1 = analysis.FirstOrDefault((x) => x.Assay.ToLower().Contains("benzodiazepines-2") && x.Assay.EndsWith("_I"))?.Result;
+            doaModel.Benzodiazepine1 = analysis.FirstOrDefault((x) => x.Assay.ToLower().Contains("benzodiazepine-1") && x.Assay.EndsWith("_I"))?.Result;
+            doaModel.Benzodiazepine2 = analysis.FirstOrDefault((x) => x.Assay.ToLower().Contains("benzodiazepine-2") && x.Assay.EndsWith("_I"))?.Result;
             doaModel.Cannabinoids = analysis.FirstOrDefault((x) => x.Assay.ToLower().Contains("cannabinoids") && x.Assay.EndsWith("_I"))?.Result;
             doaModel.Cocaine = analysis.FirstOrDefault((x) => x.Assay.ToLower().Contains("cocaine") && x.Assay.EndsWith("_I"))?.Result;
             doaModel.Ethylglucuronide = analysis.FirstOrDefault((x) => x.Assay.ToLower().Contains("ethyl glucuronide") && x.Assay.EndsWith("_I"))?.Result;
