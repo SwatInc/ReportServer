@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /ReportC/Properties/licenses.licx
 *.licx
+/ReportServerInstaller/ReportServerInstaller-SetupFiles

@@ -1,0 +1,93 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">All</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>65db2fd9-2ba2-4e4b-84c0-c3dd85f0ff70</ProjectGuid>
+    <OutputType>msi</OutputType>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>ReportServerInstaller.aip</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <IsWindowsApplication>True</IsWindowsApplication>
+    <AssemblyName>ReportServerInstaller</AssemblyName>
+    <Name>ReportServerInstaller</Name>
+    <RootNamespace>ReportServerInstaller</RootNamespace>
+    <LoadFromTemplate>
+    </LoadFromTemplate>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'DefaultBuild' " />
+  <ItemGroup>
+    <Compile Include="ReportServerInstaller.aip">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SwatInc\CD4\CD4.DataLibrary\CD4.DataLibrary.csproj">
+      <Name>CD4.DataLibrary</Name>
+      <Project>{66fb9baf-b529-4dfd-b0e9-e41b78f4ea76}</Project>
+      <Private>True</Private>
+      <CreateShortcut>False</CreateShortcut>
+      <OutputsToImport>PrimaryOutput;References;ContentOutput;SymbolsOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SwatInc\CD4\CD4.Entensibility.ReportingFramework\CD4.Entensibility.ReportingFramework.csproj">
+      <Name>CD4.Entensibility.ReportingFramework</Name>
+      <Project>{e48babf5-f903-44a6-9e87-8219ac5f13c6}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PublishOutput#FolderProfile#bin\Release\netstandard2.0\publish\#Release#Any CPU#FileSystem######</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\CD4.ReportTemplate.AnalyserGeneratedReport\CD4.ReportTemplate.AnalyserGeneratedReport.csproj">
+      <Name>CD4.ReportTemplate.AnalyserGeneratedReport</Name>
+      <Project>{04d4dddd-a4af-404a-a34f-ce989b4ab5d4}</Project>
+      <Private>True</Private>
+      <CreateShortcut>False</CreateShortcut>
+      <OutputsToImport>PrimaryOutput;References;ContentOutput;SymbolsOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\CD4.ReportTemplate.DrugOfAbuseTemplateOne\CD4.ReportTemplate.DrugOfAbuseTemplateOne.csproj">
+      <Name>CD4.ReportTemplate.DrugOfAbuseTemplateOne</Name>
+      <Project>{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}</Project>
+      <Private>True</Private>
+      <CreateShortcut>False</CreateShortcut>
+      <OutputsToImport>PrimaryOutput;References;ContentOutput;SymbolsOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\CD4.ReportTemplate.DrugOfAbuseTemplate\CD4.ReportTemplate.DrugOfAbuseTemplate.csproj">
+      <Name>CD4.ReportTemplate.DrugOfAbuseTemplate</Name>
+      <Project>{0edb8627-e2d7-43f4-8841-d0231ebbcc79}</Project>
+      <Private>True</Private>
+      <CreateShortcut>False</CreateShortcut>
+      <OutputsToImport>PrimaryOutput;References;ContentOutput;SymbolsOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\CD4.ReportTemplate.MedlabClinical\CD4.ReportTemplate.MedlabClinical.csproj">
+      <Name>CD4.ReportTemplate.MedlabClinical</Name>
+      <Project>{f93c03bc-b7f8-4f62-b1f7-9c3795f0b799}</Project>
+      <Private>True</Private>
+      <CreateShortcut>False</CreateShortcut>
+      <OutputsToImport>PrimaryOutput;References;ContentOutput;SymbolsOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\ReportServer.Extensibility\ReportServer.Extensibility.csproj">
+      <Name>ReportServer.Extensibility</Name>
+      <Project>{3cef4fbc-fd4b-41de-92d9-6351c0e7643e}</Project>
+      <Private>True</Private>
+      <CreateShortcut>False</CreateShortcut>
+      <OutputsToImport>PrimaryOutput;References;SymbolsOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\ReportServer\ReportServer.csproj">
+      <Name>ReportServer</Name>
+      <Project>{c3cda703-97f6-4ff2-bfda-951cd2364f42}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput;References;ContentOutput;SymbolsOutput</OutputsToImport>
+    </ProjectReference>
+  </ItemGroup>
+  <Target Name="Build">
+    <Error Text="This project requires Advanced Installer tool. Please download it from https://www.advancedinstaller.com/download.html" />
+  </Target>
+  <Target Name="Rebuild">
+    <Error Text="This project requires Advanced Installer tool. Please download it from https://www.advancedinstaller.com/download.html" />
+  </Target>
+  <Target Name="Clean">
+  </Target>
+  <Target Name="ResolveAssemblyReferences">
+  </Target>
+  <Import Condition="'$(AdvancedInstallerMSBuildTargets)' != ''" Project="$(AdvancedInstallerMSBuildTargets)\AdvInstExtTasks.Targets" />
+  <Import Condition="('$(AdvancedInstallerMSBuildTargets)' == '') And (Exists('$(MSBuildExtensionsPath32)\Caphyon\Advanced Installer\AdvInstExtTasks.Targets'))" Project="$(MSBuildExtensionsPath32)\Caphyon\Advanced Installer\AdvInstExtTasks.Targets" />
+</Project>
