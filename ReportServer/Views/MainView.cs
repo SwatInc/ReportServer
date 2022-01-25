@@ -44,7 +44,7 @@ namespace ReportServer.Views
         public MainView()
         {
             InitializeComponent();
-            _alertControl = new AlertControl(){FormShowingEffect = AlertFormShowingEffect.SlideHorizontal};
+            _alertControl = new AlertControl() { FormShowingEffect = AlertFormShowingEffect.SlideHorizontal };
             InitializeTabPane();
             _listOfReports = new BindingList<XtraReport>();
             InitializeSettings();
@@ -527,6 +527,10 @@ namespace ReportServer.Views
                     {
                         tempReportExportPath = _reportExportBasePath;
                     }
+                }
+                else
+                {
+                    tempReportExportPath = _reportExportBasePath;
                 }
 
                 var exportDirectoryStructure = $"{DateTime.Today:yyyy}\\{DateTime.Today:MMMM}\\{DateTime.Today:dd}\\{reportExportData.SampledSite.Trim()}";
