@@ -1,5 +1,6 @@
 ﻿using CD4.DataLibrary.DataAccess;
 using DevExpress.Skins;
+using DevExpress.XtraBars.Alerter;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraReports.UI;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -22,23 +24,26 @@ namespace ReportServer.Views
     public partial class MainView : DevExpress.XtraEditors.XtraForm
     {
         private List<IExtensibility> _loadedExtensions;
-        private ApplicationSettings _settings { get; set; }
-        private List<ReportConfigModel> _reportConfig { get; set; }
-        private bool _isMonitoringIncoming { get; set; }
-        private string _reportExportBasepath;
-        private BindingList<XtraReport> _listOfReports;
+        private string _reportExportBasePath;
+        private readonly BindingList<XtraReport> _listOfReports;
         private TabPane _tabPane;
+        // ReSharper disable once InconsistentNaming
         private const int CP_NOCLOSE_BUTTON = 0x200;
+        private readonly AlertControl _alertControl;
 
+        private ApplicationSettings Settings { get; set; }
+        private List<ReportConfigModel> ReportConfig { get; set; }
+        private bool IsMonitoringIncoming { get; set; }
 
         private delegate void PreviewReport(XtraReport report);
-        private PreviewReport _previewReportDelegate;
+        private readonly PreviewReport _previewReportDelegate;
 
         private event EventHandler InitializeMonitoring;
         private event EventHandler<FileInfo> DetectedReportDataFile;
         public MainView()
         {
             InitializeComponent();
+            _alertControl = new AlertControl();
             InitializeTabPane();
             _listOfReports = new BindingList<XtraReport>();
             InitializeSettings();
@@ -54,7 +59,7 @@ namespace ReportServer.Views
 
             toolStripMenuItemExit.Click += ToolStripMenuItemExit_Click;
             FormClosing += MainView_FormClosing;
-            _isMonitoringIncoming = true;
+            IsMonitoringIncoming = true;
             InitializeMonitoring?.Invoke(this, EventArgs.Empty);
 
             ShowInitializeCompletedPopup();
@@ -67,10 +72,14 @@ namespace ReportServer.Views
         {
             try
             {
-                _reportConfig = new List<ReportConfigModel>();
+                ReportConfig = new List<ReportConfigModel>();
                 var reportSettingsJson = Properties.Settings.Default.ReportConfig;
                 var reportSettings = JsonConvert.DeserializeObject<List<ReportConfigModel>>(reportSettingsJson);
-                _reportConfig.AddRange(reportSettings);
+                if (reportSettings != null)
+                {
+                    ReportConfig.AddRange(reportSettings);
+                }
+                else { ExceptionPopup("Cannot load settings for report server"); };
             }
             catch (Exception ex)
             {
@@ -125,7 +134,7 @@ namespace ReportServer.Views
         /// Adds Tab pages to tab pane
         /// </summary>
         /// <param name="startIndex">This is the index of the newly added report. 
-        /// loop will start addeding from this index to avoid dublicate tab panes</param>
+        /// loop will start adding from this index to avoid duplicate tab panes</param>
         private void AddTabPanePagesForReports(int startIndex)
         {
             var tabsNo = _listOfReports.Count;
@@ -135,7 +144,7 @@ namespace ReportServer.Views
 
             for (int i = startIndex; i <= tabsNo - 1; i++)
             {
-                var page = new TabNavigationPage() { Caption = $"Report [ {i + 1} ]" };
+                var page = new TabNavigationPage() { Caption = $@"Report [ {i + 1} ]" };
                 page.Controls.Add(documentViewer);
                 pages.Add(page);
                 _tabPane.Controls.Add(page);
@@ -217,8 +226,8 @@ namespace ReportServer.Views
             {
                 var test = new GlobalSettingsDataAccess();
                 var data = await test.ReadAllGlobalSettingsAsync().ConfigureAwait(true);
-                _reportExportBasepath = data?.ReportExportBasePath;
-                InfoPopup($"Report export base path: {_reportExportBasepath}");
+                _reportExportBasePath = data?.ReportExportBasePath;
+                InfoPopup($"Report export base path: {_reportExportBasePath}");
             }
             catch (SqlException)
             {
@@ -233,7 +242,7 @@ namespace ReportServer.Views
 
         private void MainView_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _isMonitoringIncoming = false;
+            IsMonitoringIncoming = false;
             notifyIcon.Visible = false;
         }
 
@@ -256,11 +265,11 @@ namespace ReportServer.Views
             await Task.Run(() =>
             {
 
-                while (_isMonitoringIncoming)
+                while (IsMonitoringIncoming)
                 {
                     try
                     {
-                        var controlFiles = Directory.GetFiles(_settings.IncomingDirectory, $"*.{_settings.ControlExtension}");
+                        var controlFiles = Directory.GetFiles(Settings.IncomingDirectory, $"*.{Settings.ControlExtension}");
                         if (controlFiles.Length > 0)
                         {
                             foreach (var controlFile in controlFiles)
@@ -268,7 +277,7 @@ namespace ReportServer.Views
                                 InfoPopup($"Detected a request for report generation.\n{controlFile}");
 
                                 var dataFile = controlFile
-                                    .Replace(_settings.ControlExtension, _settings.ReportExtension);
+                                    .Replace(Settings.ControlExtension, Settings.ReportExtension);
 
                                 DeleteFileIfExists(controlFile);
                                 var reportDataFileInfo = new FileInfo(dataFile);
@@ -283,7 +292,7 @@ namespace ReportServer.Views
                         ExceptionPopup(ex);
                     }
 
-                    Task.Delay(_settings.PolFrequencyInSec * 1000).GetAwaiter().GetResult();
+                    Task.Delay(Settings.PolFrequencyInSec * 1000).GetAwaiter().GetResult();
                 }
             });
         }
@@ -310,13 +319,22 @@ namespace ReportServer.Views
             SkinManager.EnableFormSkins();
             SkinManager.EnableMdiFormSkins();
 
-            _settings = JsonConvert.DeserializeObject<ApplicationSettings>(Properties.Settings.Default.AppSettingsJson);
+            Settings = JsonConvert.DeserializeObject<ApplicationSettings>(Properties.Settings.Default.AppSettingsJson);
         }
 
         private void PrintReport(string jsonReportData)
         {
-            if (_loadedExtensions.Count == 0) { return; }
+            if (_loadedExtensions.Count == 0)
+            {
+                WarningPopup($"No report extensions loaded!");
+                return;
+            }
             dynamic reportData = JsonConvert.DeserializeObject(jsonReportData);
+            if (reportData is null)
+            {
+                ExceptionPopup($"Report data is null. Aborting report generating");
+                return;
+            }
             var templateFound = false;
 
             foreach (var template in GetTemplateNames(reportData.TemplateName.ToString()))
@@ -330,6 +348,7 @@ namespace ReportServer.Views
                         (extension.ReportName, template))
                     {
                         templateFound = true;
+                        InfoPopup($"Selected report template [{template}]");
 
                         if (string.IsNullOrEmpty((string)reportData.EpisodeNumber) == false)
                         {
@@ -374,7 +393,7 @@ namespace ReportServer.Views
         {
             foreach (var template in GetTemplateNames(templateName))
             {
-                Console.WriteLine("looking for template: " + template);
+                Console.WriteLine(@"looking for template: " + template);
                 return extensionReportName == template.Trim();
             }
             return false;
@@ -388,20 +407,29 @@ namespace ReportServer.Views
         private void InitializeExtensions()
         {
             _loadedExtensions = new List<IExtensibility>();
+            var extensionNamesForPopUp = "";
             try
             {
                 //
-                List<Assembly> allAssemblies = new List<Assembly>();
-                string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-                foreach (string dll in Directory.GetFiles(Path.Combine(path, "Extensions"), "*.dll"))
-                    allAssemblies.Add(Assembly.LoadFile(dll));
-
-                foreach (var assembly in allAssemblies)
+                if (path != null)
                 {
-                    foreach (var type in GetAllTypesThatImplementInterface<IExtensibility>(assembly))
+                    var allAssemblies = Directory.GetFiles(Path.Combine(path, "Extensions"),
+                            "*.dll")
+                        .Select(Assembly.LoadFile)
+                        .ToList();
+
+                    if (allAssemblies.Count == 0)
                     {
-                        var instance = (IExtensibility)Activator.CreateInstance(type);
+                        ExceptionPopup($"No assemblies detected in extensions directory\n{path}");
+                        return;
+                    }
+
+                    foreach (var instance in from assembly in allAssemblies
+                                             from type in GetAllTypesThatImplementInterface<IExtensibility>(assembly)
+                                             select (IExtensibility)Activator.CreateInstance(type))
+                    {
                         instance.OnPopupMessageRequired += Instance_OnPopupMessageRequired;
                         instance.OnReportExportRequest += Instance_OnReportExportRequest;
                         instance.OnReportPreviewRequest += Instance_OnReportPreviewRequest;
@@ -410,6 +438,23 @@ namespace ReportServer.Views
                         instance.SetReportId(reportId);
                         _loadedExtensions.Add(instance);
                     }
+
+                    if (_loadedExtensions.Count == 0)
+                    {
+                        ExceptionPopup("No report template extensions loaded");
+                        return;
+                    }
+
+                    //get the names of all extensions to show in notification
+                    extensionNamesForPopUp = _loadedExtensions.Aggregate(extensionNamesForPopUp,
+                        (reportNames,
+                            extension) => $"{reportNames}\n{extension.ReportName}");
+
+                    InfoPopup($"Report extensions loaded. {extensionNamesForPopUp}");
+                }
+                else
+                {
+                    ExceptionPopup($"Cannot find the path to load extensions.");
                 }
             }
             catch (Exception ex)
@@ -421,13 +466,13 @@ namespace ReportServer.Views
 
         private int GetReportIdByNameFromConfig(string reportName)
         {
-            if(_reportConfig is null || _reportConfig?.Count <= 0)
+            if (ReportConfig is null || ReportConfig?.Count <= 0)
             {
                 ExceptionPopup("Report configuration does not exist.");
                 return 0;
             }
 
-            foreach (var item in _reportConfig)
+            foreach (var item in ReportConfig)
             {
                 if (item.ReportName == reportName)
                 {
@@ -464,15 +509,30 @@ namespace ReportServer.Views
                 ValidateReportBasePath();
                 if (string.IsNullOrEmpty(e.DisplayName))
                 {
-                    e.DisplayName = $"Report_{Guid.NewGuid()}.pdf";
+                    e.DisplayName = $@"Report_{Guid.NewGuid()}.pdf";
                 }
 
-                string exportDirectoryStructure = $"{DateTime.Today:yyyy}\\{DateTime.Today:MMMM}\\{DateTime.Today:dd}\\{reportExportData.SampledSite.Trim()}";
-                var exportDirPath = $"{_reportExportBasepath}\\{exportDirectoryStructure}";
-                CreateDirectoryIfNotExists(exportDirPath);
 
+                var tempReportExportPath = "";
+                if (_reportExportBasePath.StartsWith(@"\\"))
+                {
+                    var pathExists = QuickBestGuessAboutAccessibilityOfNetworkPath(_reportExportBasePath);
+                    if (!pathExists)
+                    {
+                        ExceptionPopup($@"Export path is not accessible [{_reportExportBasePath}].{"\n"}Exporting to default path [ C:\ReportExports\ ]");
+                        tempReportExportPath = @"C:\ReportExports";
+                    }
+                    else
+                    {
+                        tempReportExportPath = _reportExportBasePath;
+                    }
+                }
+
+                var exportDirectoryStructure = $"{DateTime.Today:yyyy}\\{DateTime.Today:MMMM}\\{DateTime.Today:dd}\\{reportExportData.SampledSite.Trim()}";
+                var exportDirPath = $"{tempReportExportPath}\\{exportDirectoryStructure}";
                 e.DisplayName = RemoveInvalidCharactersForExport(e.DisplayName);
 
+                CreateDirectoryIfNotExists(exportDirPath);
                 e.ExportToPdf($"{exportDirPath}\\{e.DisplayName}.pdf");
             }
             catch (Exception ex)
@@ -523,7 +583,7 @@ namespace ReportServer.Views
 
         private void ValidateReportBasePath()
         {
-            if (string.IsNullOrEmpty(_reportExportBasepath?.Trim()) == false) { return; }
+            if (string.IsNullOrEmpty(_reportExportBasePath?.Trim()) == false) { return; }
             WarningPopup("Report export base path is not available. Trying to get base path before exporting.");
 
             try
@@ -573,7 +633,17 @@ namespace ReportServer.Views
         }
         private void Instance_OnPopupMessageRequired(object sender, ReportServerNotificationModel e)
         {
-            notifyIcon.ShowBalloonTip(10, "Report Server notification", e.Message, e.NotifyIcon);
+            if (InvokeRequired)
+            {
+                _ = BeginInvoke(new MethodInvoker(() => Instance_OnPopupMessageRequired(sender,
+                    e)));
+            }
+            else
+            {
+                _alertControl.Show(this,
+                    $"Report Server notification: {e.NotifyIcon}",
+                    e.Message);
+            }
         }
 
         #endregion
@@ -588,10 +658,31 @@ namespace ReportServer.Views
         private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
         {
             ShowApplicationExitPopUp();
-            _isMonitoringIncoming = false;
+            IsMonitoringIncoming = false;
             notifyIcon.Visible = false;
             Environment.Exit(0);
             Close();
+        }
+
+        public static bool QuickBestGuessAboutAccessibilityOfNetworkPath(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return false;
+            string pathRoot = Path.GetPathRoot(path);
+            if (string.IsNullOrEmpty(pathRoot)) return false;
+            ProcessStartInfo info = new ProcessStartInfo("net", "use")
+            {
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false
+            };
+            var output = "";
+            using (var p = Process.Start(info))
+            {
+                if (p != null) output = p.StandardOutput.ReadToEnd();
+            }
+
+            return output.Split('\n')
+                .Any(line => line.Contains(pathRoot) && line.Contains("OK"));
         }
     }
 }
