@@ -28,7 +28,7 @@
     <PublisherName>Swat, Inc.</PublisherName>
     <SuiteName>Report Server</SuiteName>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>2.1.0.%2a</ApplicationVersion>
+    <ApplicationVersion>2.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -180,6 +180,10 @@
   <ItemGroup>
     <Content Include="Iconleak-Cerulean-Science-chemistry.ico" />
     <Content Include="printer_and_fax_w.ico" />
+    <None Include="Resources\unknown.png" />
+    <None Include="Resources\warning.png" />
+    <None Include="Resources\error.png" />
+    <None Include="Resources\information.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />

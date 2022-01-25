@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -43,7 +44,7 @@ namespace ReportServer.Views
         public MainView()
         {
             InitializeComponent();
-            _alertControl = new AlertControl();
+            _alertControl = new AlertControl(){FormShowingEffect = AlertFormShowingEffect.SlideHorizontal};
             InitializeTabPane();
             _listOfReports = new BindingList<XtraReport>();
             InitializeSettings();
@@ -635,14 +636,39 @@ namespace ReportServer.Views
         {
             if (InvokeRequired)
             {
-                _ = BeginInvoke(new MethodInvoker(() => Instance_OnPopupMessageRequired(sender,
-                    e)));
+                _ = BeginInvoke(new MethodInvoker(() => Instance_OnPopupMessageRequired(sender, e)));
             }
             else
             {
+                Image image = null;
+                switch (e.NotifyIcon)
+                {
+                    case ToolTipIcon.Info:
+                        image = Properties.Resources.information;
+                        break;
+                    case ToolTipIcon.Warning:
+                        image = Properties.Resources.warning;
+                        break;
+                    case ToolTipIcon.Error:
+                        image = Properties.Resources.error;
+                        break;
+
+                    case ToolTipIcon.None:
+                        image = Properties.Resources.unknown;
+                        break;
+                    default:
+                        image = Properties.Resources.unknown;
+                        break;
+                }
+
+                if (image is null)
+                {
+                    image = Properties.Resources.unknown;
+                }
+
                 _alertControl.Show(this,
                     $"Report Server notification: {e.NotifyIcon}",
-                    e.Message);
+                    e.Message, image);
             }
         }
 
