@@ -514,7 +514,7 @@ namespace ReportServer.Views
                     e.DisplayName = $@"Report_{Guid.NewGuid()}.pdf";
                 }
 
-
+                _reportExportBasePath = @"\\swatinc-amina\CD4.AutoUpdateLocation";
                 var tempReportExportPath = "";
                 if (_reportExportBasePath.StartsWith(@"\\"))
                 {
@@ -695,25 +695,17 @@ namespace ReportServer.Views
             Close();
         }
 
-        public static bool QuickBestGuessAboutAccessibilityOfNetworkPath(string path)
+        public bool QuickBestGuessAboutAccessibilityOfNetworkPath(string path)
         {
-            if (string.IsNullOrEmpty(path)) return false;
-            string pathRoot = Path.GetPathRoot(path);
-            if (string.IsNullOrEmpty(pathRoot)) return false;
-            ProcessStartInfo info = new ProcessStartInfo("net", "use")
+            try
             {
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false
-            };
-            var output = "";
-            using (var p = Process.Start(info))
-            {
-                if (p != null) output = p.StandardOutput.ReadToEnd();
+                return new DirectoryInfo(path).Exists;
             }
-
-            return output.Split('\n')
-                .Any(line => line.Contains(pathRoot) && line.Contains("OK"));
+            catch (Exception ex)
+            {
+                ExceptionPopup(ex);
+                return false;
+            }
         }
     }
 }
