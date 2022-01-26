@@ -195,6 +195,7 @@ namespace ReportServer.Views
 
                     break;
                 case FormWindowState.Maximized:
+                    TopMost = true;
                     break;
                 default:
                     break;
@@ -205,7 +206,7 @@ namespace ReportServer.Views
         {
             get
             {
-                CreateParams cp = base.CreateParams;
+                var cp = base.CreateParams;
                 cp.ClassStyle |= CP_NOCLOSE_BUTTON;
                 return cp;
             }
