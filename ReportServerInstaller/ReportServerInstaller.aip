@@ -67,6 +67,7 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.dll_3" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.dll_4" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.dll_5" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.dll_6" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll" Value="..\..\SwatInc\CD4\CD4.Entensibility.ReportingFramework\bin\Release\netstandard2.0\publish\de"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll_1" Value="..\..\SwatInc\CD4\CD4.Entensibility.ReportingFramework\bin\Release\netstandard2.0\publish\es"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll_2" Value="..\..\SwatInc\CD4\CD4.Entensibility.ReportingFramework\bin\Release\netstandard2.0\publish\ja"/>
@@ -318,6 +319,7 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.dll_3" Value="DevExpress.DataAccess.v18.2.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.dll_4" Value="DevExpress.DataAccess.v18.2.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.dll_5" Value="DevExpress.DataAccess.v18.2.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.dll_6" Value="DevExpress.DataAccess.v18.2.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll" Value="DevExpress.DataAccess.v18.2.resources.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll_1" Value="DevExpress.DataAccess.v18.2.resources.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll_2" Value="DevExpress.DataAccess.v18.2.resources.dll"/>
@@ -517,10 +519,10 @@
     <ROW Property="ARPPRODUCTICON" Value="ReportServer.exe" Type="8"/>
     <ROW Property="ARPSYSTEMCOMPONENT" Value="1"/>
     <ROW Property="Manufacturer" Value="Swat, Inc."/>
-    <ROW Property="ProductCode" Value="1033:{9CB2CBEA-1C28-4589-B0D9-F8467D6A07C8} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{8736227A-029F-45EC-95CA-B8149DF9565D} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ReportServer"/>
-    <ROW Property="ProductVersion" Value="2.6.0.0" Type="32" TargetFile="ReportServer.exe"/>
+    <ROW Property="ProductVersion" Value="2.6.1.0" Type="32" TargetFile="ReportServer.exe"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{3559FD3F-17A4-4097-9D6B-8A3B0F1B1595}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -550,7 +552,7 @@
     <ROW Directory="ru_Dir" Directory_Parent="CD4.Entensibility.ReportingFram_Dir" DefaultDir="ru"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="AI_CustomARPName" ComponentId="{806D893B-9131-4E59-9485-B0DABC9ADBF0}" Directory_="APPDIR" Attributes="260" KeyPath="DisplayName" Options="1"/>
+    <ROW Component="AI_CustomARPName" ComponentId="{E4B79F8E-F5E5-416C-A91B-C46FF40E6B01}" Directory_="APPDIR" Attributes="260" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{24579F88-7BA0-40DB-B8B6-8F5656E2257A}" Directory_="APPDIR" Attributes="260" KeyPath="AI_ExePath"/>
     <ROW Component="AI_PROPPATH_FILENAME_PERBUILD_CD4.Entensibility.ReportingFramework.dll" ComponentId="{D558511B-2C4C-4866-AC3A-A94DC3FFA82D}" Directory_="ReportServer_1_Dir" Attributes="256" KeyPath="CD4.Entensibility.ReportingFramework.dll"/>
     <ROW Component="AI_PROPPATH_FILENAME_PERBUILD_CD4.Entensibility.ReportingFramework.dll_4" ComponentId="{7C6DA157-0D22-4EDE-86EA-2DAA3FBABD33}" Directory_="Extensions_Dir" Attributes="256" KeyPath="CD4.Entensibility.ReportingFramework.dll_4"/>
@@ -716,7 +718,7 @@
     <ROW File="DevExpress.XtraBars.v18.2.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~51.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraBars.v18.2.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraBars.v18.2.dll_2&gt;" SelfReg="false"/>
     <ROW File="DevExpress.XtraBars.v18.2.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~50.DLL|DevExpress.XtraBars.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraBars.v18.2.dll_3&gt;" SelfReg="false"/>
     <ROW File="DevExpress.Pdf.v18.2.Core.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~23.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.Pdf.v18.2.Core.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.Pdf.v18.2.Core.dll_2&gt;" SelfReg="false"/>
-    <ROW File="DevExpress.XtraCharts.v18.2.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~53.DLL|DevExpress.XtraCharts.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraCharts.v18.2.dll_2&gt;" SelfReg="false"/>
+    <ROW File="DevExpress.XtraCharts.v18.2.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~65.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraCharts.v18.2.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraCharts.v18.2.dll_2&gt;" SelfReg="false"/>
     <ROW File="ReportServer.Extensibility.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="REPORT~2.DLL|ReportServer.Extensibility.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_ReportServer.Extensibility.dll_2&gt;" SelfReg="false"/>
     <ROW File="DevExpress.XtraEditors.v18.2.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~75.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraEditors.v18.2.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraEditors.v18.2.dll_2&gt;" SelfReg="false"/>
     <ROW File="DevExpress.XtraGauges.v18.2.Core.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~72.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraGauges.v18.2.Core.dll_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraGauges.v18.2.Core.dll_3&gt;" SelfReg="false"/>
@@ -732,7 +734,7 @@
     <ROW File="DevExpress.Pdf.v18.2.Core.dll_6" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~62.DLL|DevExpress.Pdf.v18.2.Core.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.Pdf.v18.2.Core.dll_6&gt;" SelfReg="false"/>
     <ROW File="DevExpress.RichEdit.v18.2.Core.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~43.DLL|DevExpress.RichEdit.v18.2.Core.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.RichEdit.v18.2.Core.dll_3&gt;" SelfReg="false"/>
     <ROW File="DevExpress.Sparkline.v18.2.Core.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~73.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.Sparkline.v18.2.Core.dll_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.Sparkline.v18.2.Core.dll_3&gt;" SelfReg="false"/>
-    <ROW File="DevExpress.DataAccess.v18.2.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~65.DLL|DevExpress.DataAccess.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.DataAccess.v18.2.dll_3&gt;" SelfReg="false"/>
+    <ROW File="DevExpress.DataAccess.v18.2.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~76.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.dll_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.DataAccess.v18.2.dll_3&gt;" SelfReg="false"/>
     <ROW File="DevExpress.XtraLayout.v18.2.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~25.DLL|DevExpress.XtraLayout.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraLayout.v18.2.dll_3&gt;" SelfReg="false"/>
     <ROW File="CD4.Entensibility.ReportingFramework.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="CD4ENT~2.DLL|CD4.Entensibility.ReportingFramework.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_CD4.Entensibility.ReportingFramework.dll_2&gt;" SelfReg="false"/>
     <ROW File="DevExpress.Office.v18.2.Core.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~67.DLL|DevExpress.Office.v18.2.Core.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.Office.v18.2.Core.dll_3&gt;" SelfReg="false"/>
@@ -745,7 +747,7 @@
     <ROW File="Config.json_1" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_ContentOutput" FileName="CONFIG~3.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_Config.json_1]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Config.json_1&gt;" SelfReg="false"/>
     <ROW File="Config.json_3" Component_="ReportServer_ContentOutput" FileName="CONFIG~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_Config.json_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Config.json_3&gt;" SelfReg="false"/>
     <ROW File="DevExpress.CodeParser.v18.2.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~44.DLL|DevExpress.CodeParser.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.CodeParser.v18.2.dll_3&gt;" SelfReg="false"/>
-    <ROW File="Config.json_4" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_ContentOutput" FileName="CONFIG~1.JSO|Config.json" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Config.json_4&gt;" SelfReg="false"/>
+    <ROW File="Config.json_4" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_ContentOutput" FileName="CONFIG~4.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_Config.json_4]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Config.json_4&gt;" SelfReg="false"/>
     <ROW File="DevExpress.Sparkline.v18.2.Core.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~74.DLL|DevExpress.Sparkline.v18.2.Core.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.Sparkline.v18.2.Core.dll_2&gt;" SelfReg="false"/>
     <ROW File="CD4.DataLibrary.dll_2" Component_="CD4.DataLibrary_PrimaryOutput" FileName="CD4DAT~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_CD4.DataLibrary.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_CD4.DataLibrary.dll_2&gt;" SelfReg="false"/>
     <ROW File="Dapper.dll_2" Component_="CD4.DataLibrary_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_Dapper.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Dapper.dll_2&gt;" SelfReg="false"/>
@@ -833,6 +835,7 @@
     <ROW File="DevExpress.XtraGauges.v18.2.Core.resources.dll_3" Component_="CD4.Entensibility.ReportingFramework_PublishOutput_ru" FileName="DEVEX~12.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraGauges.v18.2.Core.resources.dll_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraGauges.v18.2.Core.resources.dll_3&gt;" SelfReg="false"/>
     <ROW File="DevExpress.XtraReports.v18.2.resources.dll_3" Component_="CD4.Entensibility.ReportingFramework_PublishOutput_ru" FileName="DEVEX~13.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraReports.v18.2.resources.dll_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraReports.v18.2.resources.dll_3&gt;" SelfReg="false"/>
     <ROW File="DevExpress.XtraEditors.v18.2.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~54.DLL|DevExpress.XtraEditors.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraEditors.v18.2.dll_3&gt;" SelfReg="false"/>
+    <ROW File="DevExpress.DataAccess.v18.2.dll_6" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~77.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.dll_6]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.DataAccess.v18.2.dll_6&gt;" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_CD4.DataLibrary.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_CD4.DataLibrary.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_CD4.DataLibrary.dll]" Type="2" Content="0"/>
@@ -895,6 +898,7 @@
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.DataAccess.v18.2.dll_3" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.dll_3]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.dll_3]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.DataAccess.v18.2.dll_4" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.dll_4]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.dll_4]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.DataAccess.v18.2.dll_5" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.dll_5]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.dll_5]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_DevExpress.DataAccess.v18.2.dll_6" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.dll_6]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.dll_6]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll_1" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll_1]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll_1]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll_2" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll_2]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.DataAccess.v18.2.resources.dll_2]" Type="2" Content="0"/>
@@ -1625,6 +1629,7 @@
     <ROW ProjectId="{e48babf5-f903-44a6-9e87-8219ac5f13c6}" ProjectName="CD4.Entensibility.ReportingFramework" OutputGroup="PublishOutput" OutputFile="DevExpress.XtraCharts.v18.2.resources.dll_3"/>
     <ROW ProjectId="{e48babf5-f903-44a6-9e87-8219ac5f13c6}" ProjectName="CD4.Entensibility.ReportingFramework" OutputGroup="PublishOutput" OutputFile="DevExpress.XtraGauges.v18.2.Core.resources.dll_3"/>
     <ROW ProjectId="{e48babf5-f903-44a6-9e87-8219ac5f13c6}" ProjectName="CD4.Entensibility.ReportingFramework" OutputGroup="PublishOutput" OutputFile="DevExpress.XtraReports.v18.2.resources.dll_3"/>
+    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.XtraEditors.v18.2.dll_3"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="CD4.DataLibrary.dll_1"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="CD4.Entensibility.ReportingFramework.dll_2"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.Data.v18.2.dll_2"/>
@@ -1638,9 +1643,8 @@
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="ReportServer.Extensibility.dll_2"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="Dapper.dll_3"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="SwatIncCrypto.dll_3"/>
-    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.XtraEditors.v18.2.dll_3"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.Xpo.v18.2.dll_3"/>
-    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.DataAccess.v18.2.dll_3"/>
+    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.DataAccess.v18.2.dll_6"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.CodeParser.v18.2.dll_3"/>
     <ROW ProjectId="{0edb8627-e2d7-43f4-8841-d0231ebbcc79}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplate" OutputGroup="References" OutputFile="CD4.DataLibrary.dll_1"/>
     <ROW ProjectId="{0edb8627-e2d7-43f4-8841-d0231ebbcc79}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplate" OutputGroup="References" OutputFile="DevExpress.Charts.v18.2.Core.dll_2"/>
@@ -1655,7 +1659,7 @@
     <ROW XmlAttribute="xsischemaLocation" XmlElement="swidsoftware_identification_tag" Name="xsi:schemaLocation" Flags="14" Order="3" Value="http://standards.iso.org/iso/19770/-2/2008/schema.xsd software_identification_tag.xsd"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.XmlElementComponent">
-    <ROW XmlElement="swidbuild" ParentElement="swidnumeric" Name="swid:build" Condition="1" Order="2" Flags="14" Text="0" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidbuild" ParentElement="swidnumeric" Name="swid:build" Condition="1" Order="2" Flags="14" Text="1" UpdateIndexInParent="0"/>
     <ROW XmlElement="swidentitlement_required_indicator" ParentElement="swidsoftware_identification_tag" Name="swid:entitlement_required_indicator" Condition="1" Order="0" Flags="14" Text="false" UpdateIndexInParent="0"/>
     <ROW XmlElement="swidmajor" ParentElement="swidnumeric" Name="swid:major" Condition="1" Order="0" Flags="14" Text="2" UpdateIndexInParent="0"/>
     <ROW XmlElement="swidminor" ParentElement="swidnumeric" Name="swid:minor" Condition="1" Order="1" Flags="14" Text="6" UpdateIndexInParent="0"/>
