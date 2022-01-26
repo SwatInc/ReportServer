@@ -138,6 +138,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\CheckNetworkAccessHelper.cs" />
     <Compile Include="Models\ApplicationSettings.cs" />
     <Compile Include="Models\ReportConfigModel.cs" />
     <Compile Include="Program.cs" />
@@ -180,6 +181,7 @@
   <ItemGroup>
     <Content Include="Iconleak-Cerulean-Science-chemistry.ico" />
     <Content Include="printer_and_fax_w.ico" />
+    <None Include="Resources\copy16px.png" />
     <None Include="Resources\unknown.png" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\error.png" />

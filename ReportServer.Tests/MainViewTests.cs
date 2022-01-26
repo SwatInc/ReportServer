@@ -1,28 +1,29 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using ReportServer.Views;
+using ReportServer.Helpers;
 
 namespace ReportServer.Tests
 {
     [TestClass]
-    public class MainViewTests
+    public class ReportServerHelpers
     {
         [TestMethod]
-        public void MainViewTests_TestUncPathAvailability_True()
+        public void ReportServerHelpers_TestUncPathAvailability_True()
         {
             
             var testUncPath = @"\\swatinc-amina\CD4.AutoUpdateLocation";
-            var isUncPath = new MainView().QuickBestGuessAboutAccessibilityOfNetworkPath(testUncPath);
+            var isUncPath = CheckNetworkAccessHelper.QuickBestGuessAboutAccessibilityOfNetworkPath(testUncPath);
 
             Assert.IsTrue(isUncPath);
         }
 
         [TestMethod]
-        public void MainViewTests_TestUncPathAvailability_False()
+        public void ReportServerHelpers_TestUncPathAvailability_False()
         {
             
             var testUncPath = @"\\swatinc-nis\CD4.AutoUpdateLocation";
-            var isUncPath = new MainView().QuickBestGuessAboutAccessibilityOfNetworkPath(testUncPath);
+            var isUncPath = CheckNetworkAccessHelper.QuickBestGuessAboutAccessibilityOfNetworkPath(testUncPath);
 
             Assert.IsTrue(!isUncPath);
         }

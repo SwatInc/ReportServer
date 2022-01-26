@@ -58,6 +58,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ReportServer.Extensibility\ReportServer.Extensibility.csproj">
+      <Project>{3CEF4FBC-FD4B-41DE-92D9-6351C0E7643E}</Project>
+      <Name>ReportServer.Extensibility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReportServer\ReportServer.csproj">
       <Project>{c3cda703-97f6-4ff2-bfda-951cd2364f42}</Project>
       <Name>ReportServer</Name>

@@ -6,13 +6,13 @@ using DevExpress.XtraReports.UI;
 using Newtonsoft.Json;
 using ReportServer.Extensibility.Interfaces;
 using ReportServer.Extensibility.Models;
+using ReportServer.Helpers;
 using ReportServer.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace ReportServer.Views
         private TabPane _tabPane;
         // ReSharper disable once InconsistentNaming
         private const int CP_NOCLOSE_BUTTON = 0x200;
-        private readonly AlertControl _alertControl;
+        private AlertControl _alertControl;
 
         private ApplicationSettings Settings { get; set; }
         private List<ReportConfigModel> ReportConfig { get; set; }
@@ -44,7 +44,7 @@ namespace ReportServer.Views
         public MainView()
         {
             InitializeComponent();
-            _alertControl = new AlertControl() { FormShowingEffect = AlertFormShowingEffect.SlideHorizontal };
+            InitializeAlertControl();
             InitializeTabPane();
             _listOfReports = new BindingList<XtraReport>();
             InitializeSettings();
@@ -67,6 +67,24 @@ namespace ReportServer.Views
             Resize += MainView_Resize;
             KeyDown += MainView_KeyDown;
 
+        }
+
+        private void InitializeAlertControl()
+        {
+            _alertControl = new AlertControl()
+            {
+                FormShowingEffect = AlertFormShowingEffect.SlideHorizontal,
+                Buttons = { new AlertButton(Properties.Resources.copy16px) { Name = "CopyContent" } }
+            };
+            _alertControl.ButtonClick += _alertControl_ButtonClick;
+        }
+
+        private void _alertControl_ButtonClick(object sender, AlertButtonClickEventArgs e)
+        {
+            if (e.ButtonName == "CopyContent")
+            {
+                Clipboard.SetText($"Header: {e.AlertForm.AlertInfo.Caption}\nMessage: {e.AlertForm.AlertInfo.Text}");
+            }
         }
 
         private void InitializeReportConfig()
@@ -514,11 +532,11 @@ namespace ReportServer.Views
                     e.DisplayName = $@"Report_{Guid.NewGuid()}.pdf";
                 }
 
-                _reportExportBasePath = @"\\swatinc-amina\CD4.AutoUpdateLocation";
                 var tempReportExportPath = "";
                 if (_reportExportBasePath.StartsWith(@"\\"))
                 {
-                    var pathExists = QuickBestGuessAboutAccessibilityOfNetworkPath(_reportExportBasePath);
+                    var pathExists = CheckNetworkAccessHelper
+                        .QuickBestGuessAboutAccessibilityOfNetworkPath(_reportExportBasePath);
                     if (!pathExists)
                     {
                         ExceptionPopup($@"Export path is not accessible [{_reportExportBasePath}].{"\n"}Exporting to default path [ C:\ReportExports\ ]");
@@ -692,20 +710,7 @@ namespace ReportServer.Views
             IsMonitoringIncoming = false;
             notifyIcon.Visible = false;
             Environment.Exit(0);
-            Close();
         }
 
-        public bool QuickBestGuessAboutAccessibilityOfNetworkPath(string path)
-        {
-            try
-            {
-                return new DirectoryInfo(path).Exists;
-            }
-            catch (Exception ex)
-            {
-                ExceptionPopup(ex);
-                return false;
-            }
-        }
     }
 }
