@@ -4,8 +4,8 @@
   <Settings>
     <Setting Name="AppSettingsJson" Type="System.String" Scope="User">
       <Value Profile="(Default)">{
-    "ApplicationName": "Report Server",
-    "IncomingDirectory":"C:\\ReportJsons",
+    "ApplicationName": "Report Server Staging",
+    "IncomingDirectory":"C:\\ReportJsons.Staging",
     "PolFrequencyInSec":"1",
     "ControlExtension":"ok",
     "ReportExtension":"rpt.json"

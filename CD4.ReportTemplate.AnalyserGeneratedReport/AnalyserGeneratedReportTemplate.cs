@@ -50,11 +50,11 @@ namespace CD4.ReportTemplate.AnalyserGeneratedReport
                 switch (_reportMode)
                 {
                     case ReportMode.Sample:
-                        data = await reportDataAccess.GetAnalysisReportByCinAsync(e.Sid, 1,_reportTemplateId);
+                        data = await reportDataAccess.GetAnalysisReportByCinAsync(e.Sid, e.LoggedInUserId,_reportTemplateId);
 
                         break;
                     case ReportMode.Episode:
-                        data = await reportDataAccess.GetAnalysisReportForEpisodeAsync(e.EpisodeNumber, 1, _reportTemplateId);
+                        data = await reportDataAccess.GetAnalysisReportForEpisodeAsync(e.EpisodeNumber, e.LoggedInUserId, _reportTemplateId);
                         break;
                     default:
                         data = null;

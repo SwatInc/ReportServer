@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="19.1" version="19.2" Modules="professional" RootPath="." Language="en" Id="{B31899A0-42DD-4818-983A-C426DE2F59A8}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="19.1" version="19.1" Modules="professional" RootPath="." Language="en" Id="{B31899A0-42DD-4818-983A-C426DE2F59A8}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
@@ -220,7 +220,6 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraPrinting.v18.2.dll" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_1" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_2" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_3" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_4" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraReports.v18.2.Extensions.dll" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraReports.v18.2.dll" Value="..\..\..\..\..\..\Program Files (x86)\DevExpress 18.2\Components\Bin\Framework"/>
@@ -477,7 +476,6 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll" Value="DevExpress.XtraPrinting.v18.2.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_1" Value="DevExpress.XtraPrinting.v18.2.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_2" Value="DevExpress.XtraPrinting.v18.2.dll"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_3" Value="DevExpress.XtraPrinting.v18.2.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_4" Value="DevExpress.XtraPrinting.v18.2.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraReports.v18.2.Extensions.dll" Value="DevExpress.XtraReports.v18.2.Extensions.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraReports.v18.2.dll" Value="DevExpress.XtraReports.v18.2.dll"/>
@@ -532,7 +530,7 @@
     <ROW Property="ProductCode" Value="1033:{8736227A-029F-45EC-95CA-B8149DF9565D} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ReportServer"/>
-    <ROW Property="ProductVersion" Value="2.6.1.0" Options="16"/>
+    <ROW Property="ProductVersion" Value="2.6.1.0" Type="32" TargetFile="ReportServer.exe"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{3559FD3F-17A4-4097-9D6B-8A3B0F1B1595}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -748,10 +746,10 @@
     <ROW File="DevExpress.XtraLayout.v18.2.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~25.DLL|DevExpress.XtraLayout.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraLayout.v18.2.dll_3&gt;" SelfReg="false"/>
     <ROW File="CD4.Entensibility.ReportingFramework.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="CD4ENT~2.DLL|CD4.Entensibility.ReportingFramework.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_CD4.Entensibility.ReportingFramework.dll_2&gt;" SelfReg="false"/>
     <ROW File="DevExpress.Office.v18.2.Core.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~67.DLL|DevExpress.Office.v18.2.Core.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.Office.v18.2.Core.dll_3&gt;" SelfReg="false"/>
-    <ROW File="DevExpress.Printing.v18.2.Core.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~80.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.Printing.v18.2.Core.dll_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.Printing.v18.2.Core.dll_3&gt;" SelfReg="false"/>
+    <ROW File="DevExpress.Printing.v18.2.Core.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~28.DLL|DevExpress.Printing.v18.2.Core.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.Printing.v18.2.Core.dll_3&gt;" SelfReg="false"/>
     <ROW File="DevExpress.Utils.v18.2.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~69.DLL|DevExpress.Utils.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.Utils.v18.2.dll_3&gt;" SelfReg="false"/>
     <ROW File="DevExpress.XtraTreeList.v18.2.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~34.DLL|DevExpress.XtraTreeList.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraTreeList.v18.2.dll_3&gt;" SelfReg="false"/>
-    <ROW File="DevExpress.XtraPrinting.v18.2.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~79.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_2&gt;" SelfReg="false"/>
+    <ROW File="DevExpress.XtraPrinting.v18.2.dll_2" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~71.DLL|DevExpress.XtraPrinting.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_2&gt;" SelfReg="false"/>
     <ROW File="Config.json" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_ContentOutput" FileName="CONFIG~2.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_Config.json]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Config.json&gt;" SelfReg="false"/>
     <ROW File="DevExpress.XtraGauges.v18.2.Core.dll_6" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~42.DLL|DevExpress.XtraGauges.v18.2.Core.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraGauges.v18.2.Core.dll_6&gt;" SelfReg="false"/>
     <ROW File="Config.json_1" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_ContentOutput" FileName="CONFIG~3.JSO|[|AI_PROPPATH_FILENAME_PERBUILD_Config.json_1]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Config.json_1&gt;" SelfReg="false"/>
@@ -850,7 +848,6 @@
     <ROW File="CD4.DataLibrary.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="CD4DAT~2.DLL|CD4.DataLibrary.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_CD4.DataLibrary.dll_3&gt;" SelfReg="false"/>
     <ROW File="DevExpress.PivotGrid.v18.2.Core.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~78.DLL|DevExpress.PivotGrid.v18.2.Core.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.PivotGrid.v18.2.Core.dll_3&gt;" SelfReg="false"/>
     <ROW File="Config.json_5" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_ContentOutput" FileName="CONFIG~1.JSO|Config.json" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Config.json_5&gt;" SelfReg="false"/>
-    <ROW File="DevExpress.XtraPrinting.v18.2.dll_3" Component_="CD4.ReportTemplate.DrugOfAbuseTemplate_References" FileName="DEVEX~71.DLL|DevExpress.XtraPrinting.v18.2.dll" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_3&gt;" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_CD4.DataLibrary.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_CD4.DataLibrary.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_CD4.DataLibrary.dll]" Type="2" Content="0"/>
@@ -1066,7 +1063,6 @@
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.XtraPrinting.v18.2.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraPrinting.v18.2.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_1" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_1]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_1]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_2" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_2]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_2]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_3" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_3]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_3]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_4" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_4]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraPrinting.v18.2.dll_4]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.XtraReports.v18.2.Extensions.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraReports.v18.2.Extensions.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraReports.v18.2.Extensions.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_DevExpress.XtraReports.v18.2.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_DevExpress.XtraReports.v18.2.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_DevExpress.XtraReports.v18.2.dll]" Type="2" Content="0"/>
@@ -1122,10 +1118,7 @@
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
-    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" UseSha256="1" Thumbprint="34545c74e2623c231aee8da2154270ac1e60ecfc Subject: CD4_LIMS&#10;Issuer: CD4_LIMS&#10;Valid from 02/26/2022 to 02/26/2023&#10;User\MY" Subject="CN=CD4_LIMS"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.DynamicPropertyComponent">
-    <ROW Property="ProductVersion" Type="2" SourcePath="ReportServer.exe"/>
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" UseSha256="1" Thumbprint="3221da729538c47bdb394c3152d2d8a3fe23a87d Subject: CD4 LIMS&#10;Issuer: CD4 LIMS&#10;Valid from 02/22/2021 to 02/22/2022&#10;User\MY" Subject="CN=CD4 LIMS, O=SwatInc, C=US"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
@@ -1361,11 +1354,8 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
     <ROW Registry="AI_ExePath" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Value="[AI_SETUPEXEPATH]" Component_="AI_ExePath"/>
-    <ROW Registry="AdvancedInstaller" Root="-1" Key="Software\Caphyon\Advanced Installer" Name="\"/>
-    <ROW Registry="Caphyon" Root="-1" Key="Software\Caphyon" Name="\"/>
     <ROW Registry="Comments" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Comments" Value="[ARPCOMMENTS]" Component_="AI_CustomARPName"/>
     <ROW Registry="Contact" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Contact" Value="[ARPCONTACT]" Component_="AI_CustomARPName"/>
-    <ROW Registry="CurrentVersion" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion" Name="\"/>
     <ROW Registry="DisplayIcon" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayIcon" Value="[ARP_ICON_PATH]" Component_="AI_CustomARPName"/>
     <ROW Registry="DisplayName" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayName" Value="[AI_PRODUCTNAME_ARP]" Component_="AI_CustomARPName"/>
     <ROW Registry="DisplayVersion" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayVersion" Value="[ProductVersion]" Component_="AI_CustomARPName"/>
@@ -1373,28 +1363,18 @@
     <ROW Registry="HelpLink" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="HelpLink" Value="[ARPHELPLINK]" Component_="AI_CustomARPName"/>
     <ROW Registry="HelpTelephone" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="HelpTelephone" Value="[ARPHELPTELEPHONE]" Component_="AI_CustomARPName"/>
     <ROW Registry="InstallLocation" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="InstallLocation" Value="[APPDIR]" Component_="AI_CustomARPName"/>
-    <ROW Registry="LZMA" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA" Name="\"/>
-    <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
-    <ROW Registry="Microsoft" Root="-1" Key="Software\Microsoft" Name="\"/>
     <ROW Registry="ModifyPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="ModifyPath" Value="[AI_UNINSTALLER] /i [ProductCode] AI_UNINSTALLER_CTP=1" Component_="AI_CustomARPName"/>
     <ROW Registry="NoRepair" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="NoRepair" Value="#1" Component_="AI_CustomARPName" VirtualValue="#"/>
     <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
-    <ROW Registry="ProductCode" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]" Name="\"/>
-    <ROW Registry="ProductName" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="\"/>
-    <ROW Registry="ProductNameProductVersion" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="\"/>
-    <ROW Registry="ProductVersion" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="\"/>
     <ROW Registry="Publisher" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Publisher" Value="[Manufacturer]" Component_="AI_CustomARPName"/>
     <ROW Registry="Readme" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Readme" Value="[ARPREADME]" Component_="AI_CustomARPName"/>
-    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
     <ROW Registry="URLInfoAbout" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLInfoAbout" Value="[ARPURLINFOABOUT]" Component_="AI_CustomARPName"/>
     <ROW Registry="URLUpdateInfo" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLUpdateInfo" Value="[ARPURLUPDATEINFO]" Component_="AI_CustomARPName"/>
-    <ROW Registry="Uninstall" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall" Name="\"/>
     <ROW Registry="UninstallPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallPath" Value="[AI_UNINSTALLER] /x [ProductCode] AI_UNINSTALLER_CTP=1" Component_="AI_CustomARPName"/>
     <ROW Registry="UninstallString" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallString" Value="[AI_UNINSTALLER] /x [ProductCode] AI_UNINSTALLER_CTP=1" Component_="AI_CustomARPName"/>
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
     <ROW Registry="VersionMajor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMajor" Value="#1" Component_="AI_CustomARPName" VirtualValue="#"/>
     <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName" VirtualValue="#"/>
-    <ROW Registry="Windows" Root="-1" Key="Software\Microsoft\Windows" Name="\"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="AI_PROPPATH_FILENAME_PERBUILD_Repor" Directory_="SHORTCUTDIR" Name="REPORT~1.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_ReportServer.exe]" Component_="AI_PROPPATH_FILENAME_PERBUILD_ReportServer.exe" Target="[#ReportServer.exe]" Hotkey="0" Icon_="ReportServer.exe" IconIndex="0" ShowCmd="1" WkDir="ReportServer_1_Dir"/>
@@ -1667,26 +1647,26 @@
     <ROW ProjectId="{e48babf5-f903-44a6-9e87-8219ac5f13c6}" ProjectName="CD4.Entensibility.ReportingFramework" OutputGroup="PublishOutput" OutputFile="DevExpress.XtraReports.v18.2.resources.dll_3"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.XtraEditors.v18.2.dll_3"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.DataAccess.v18.2.dll_6"/>
-    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.XtraCharts.v18.2.dll_6"/>
-    <ROW ProjectId="{0edb8627-e2d7-43f4-8841-d0231ebbcc79}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplate" OutputGroup="References" OutputFile="CD4.DataLibrary.dll_3"/>
-    <ROW ProjectId="{0edb8627-e2d7-43f4-8841-d0231ebbcc79}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplate" OutputGroup="References" OutputFile="DevExpress.PivotGrid.v18.2.Core.dll_3"/>
-    <ROW ProjectId="{0edb8627-e2d7-43f4-8841-d0231ebbcc79}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplate" OutputGroup="ContentOutput" OutputFile="Config.json_5"/>
-    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.XtraPrinting.v18.2.dll_3"/>
-    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="CD4.DataLibrary.dll_3"/>
+    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="CD4.DataLibrary.dll_1"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="CD4.Entensibility.ReportingFramework.dll_2"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.Data.v18.2.dll_2"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.Office.v18.2.Core.dll_3"/>
-    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.PivotGrid.v18.2.Core.dll_3"/>
+    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.PivotGrid.v18.2.Core.dll_1"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.Printing.v18.2.Core.dll_3"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.RichEdit.v18.2.Core.dll_3"/>
+    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.XtraCharts.v18.2.dll_6"/>
+    <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.XtraPrinting.v18.2.dll_2"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="Newtonsoft.Json.dll_5"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="ReportServer.Extensibility.dll_2"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="Dapper.dll_3"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="SwatIncCrypto.dll_3"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.Xpo.v18.2.dll_3"/>
     <ROW ProjectId="{1d64a485-4771-4d2f-ab2f-fad6c54ed4ab}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplateOne" OutputGroup="References" OutputFile="DevExpress.CodeParser.v18.2.dll_3"/>
+    <ROW ProjectId="{0edb8627-e2d7-43f4-8841-d0231ebbcc79}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplate" OutputGroup="References" OutputFile="CD4.DataLibrary.dll_3"/>
     <ROW ProjectId="{0edb8627-e2d7-43f4-8841-d0231ebbcc79}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplate" OutputGroup="References" OutputFile="DevExpress.Charts.v18.2.Core.dll_2"/>
+    <ROW ProjectId="{0edb8627-e2d7-43f4-8841-d0231ebbcc79}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplate" OutputGroup="References" OutputFile="DevExpress.PivotGrid.v18.2.Core.dll_3"/>
     <ROW ProjectId="{0edb8627-e2d7-43f4-8841-d0231ebbcc79}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplate" OutputGroup="References" OutputFile="DevExpress.RichEdit.v18.2.Export.dll_2"/>
+    <ROW ProjectId="{0edb8627-e2d7-43f4-8841-d0231ebbcc79}" ProjectName="CD4.ReportTemplate.DrugOfAbuseTemplate" OutputGroup="ContentOutput" OutputFile="Config.json_5"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.XmlAttributeComponent">
     <ROW XmlAttribute="xmlnsds" XmlElement="swidsoftware_identification_tag" Name="xmlns:ds" Flags="14" Order="0" Value="http://www.w3.org/2000/09/xmldsig#"/>

@@ -11,5 +11,6 @@ namespace CD4.ReportTemplate.DrugOfAbuseTemplate.Models
         public string TemplateName { get; set; }
         public string EpisodeNumber { get; set; }
         public string Sid { get; set; }
+        public int LoggedInUserId { get; set; }
     }
 }
