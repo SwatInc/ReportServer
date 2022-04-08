@@ -370,17 +370,17 @@ namespace ReportServer.Views
                         templateFound = true;
                         InfoPopup($"Selected report template [{template}]");
 
-                        if (string.IsNullOrEmpty((string)reportData.EpisodeNumber) == false)
+                        if (reportData.ReportMode == "VisitWise")
                         {
                             extension.Print(jsonReportData, "", ReportMode.Episode, reportAction);
                         }
-                        else if (string.IsNullOrEmpty((string)reportData.Sid) == false)
+                        else if (reportData.ReportMode == "SampleWise")
                         {
                             extension.Print(jsonReportData, "", ReportMode.Sample, reportAction);
                         }
                         else
                         {
-                            WarningPopup("Cannot detect an episode number or sample number to " +
+                            WarningPopup("Cannot detect report mode visit wise or sample wise to " +
                                 "generate the report. Request ignored!");
                         }
 
